@@ -7,7 +7,7 @@ public class Ship1 : MonoBehaviour {
 
 	public bool impact = false;
 	public string bogey;
-
+	public int collide_side;
 	public GameObject g_obj_bogey;
 	
 
@@ -28,6 +28,17 @@ public class Ship1 : MonoBehaviour {
 		bogey = other.name;
 	
 		g_obj_bogey = other.gameObject;
+
+		Vector3 direction = other.transform.position - transform.position;
+		if (Vector3.Dot (transform.forward, direction) > 0) {
+			collide_side = 1;
+		} 
+		if (Vector3.Dot (transform.forward, direction) <= 0) {
+			collide_side = 0;
+		} 
+		// if (Vector3.Dot (transform.forward, direction) == 0) {
+		// 	print ("Side");
+		// }
 	
 		
 	}

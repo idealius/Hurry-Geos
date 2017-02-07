@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
+public struct level
+{
+	public float start_position;
+	public float tickrate;
+}
+
 namespace nsLevelManager {
 	 public class LevelManager : MonoBehaviour{
 	
@@ -11,16 +17,9 @@ namespace nsLevelManager {
 		public float radius_shift = 1;
 		private float radius_signature;
 
-		public float level1_start_position = 0;
-
-		public float level2_start_position = 0;
-
-		public float level3_start_position = 0;
+		public level lvl1, lvl2, lvl3, current;
 
 		//public const float level_default_tickrate = .15F;
-		public float level1_tickrate = .15f;
-		public float level2_tickrate = .15f;
-		public float level3_tickrate = .15f;
 
 		
 	
@@ -36,8 +35,7 @@ namespace nsLevelManager {
 		private int[][,] current_course_data;
 		public float current_position;
 		public int current_length;
-		public float current_tickrate;
-
+		
 		public int current_level = 1;
 
 
@@ -58,6 +56,10 @@ namespace nsLevelManager {
 				shp1_scr = shp1.GetComponent<Ship1>();
 				shp2_scr = shp2.GetComponent<Ship2>();
 
+				lvl1.start_position = 0;
+				lvl1.tickrate = .15f;
+				lvl2 = lvl1;
+				lvl3 = lvl1;
 		}
 		
 		public void UpdatePosition()
@@ -70,45 +72,56 @@ namespace nsLevelManager {
 		}
 		public void CheckforImpact()
 		{
-			
+			int pos = position;
+			int active_ship = 0;
+
 			if (shp1_scr == null || shp2_scr == null) return;
+
+			if (shp1_scr.impact) active_ship = 1; else if (shp2_scr.impact) active_ship = 2;
 		
-			if (shp1_scr.impact || shp2_scr.impact)
+			if (active_ship != 0)
 			{
 				
 				if (shp1_scr.bogey.Contains("amper") || shp2_scr.bogey.Contains("amper"))
 				{
 					
-					// if (radius_signature != position)
-					// {
-					// 	radius_signature = position;
-						if (radius_shift == 1) radius_shift = 0; else radius_shift = 1;
-					// }
+					if (radius_shift == 1) radius_shift = 0; else radius_shift = 1;
+
+					if (active_ship == 1)
+						{
+							if (shp1_scr.collide_side == 0) pos--;
+						}
+					else
+						{
+							if (shp2_scr.collide_side == 0) pos--;
+						}
+
+					
 					if (shp1_scr.g_obj_bogey != null)
 					{
 					
-						for (int i = course_obj_list[position].Count - 1; i > -1; i--)
+						for (int i = course_obj_list[pos].Count - 1; i > -1; i--)
 						{
 					
-							if (course_obj_list[position][i].name.Contains("amper"))
+							if (course_obj_list[pos][i].name.Contains("amper"))
 							{
-								DestroyImmediate(course_obj_list[position][i]);
+								DestroyImmediate(course_obj_list[pos][i]);
 								
 								//course_obj_list[position][i] = null;
-								course_obj_list[position].RemoveAt(i);
+								course_obj_list[pos].RemoveAt(i);
 							}
 						}
 					}
 					else if (shp2_scr.g_obj_bogey != null)
 					{
-						for (int i = course_obj_list[position].Count - 1; i > -1; i--)
+						for (int i = course_obj_list[pos].Count - 1; i > -1; i--)
 						{
-							if (course_obj_list[position][i].name.Contains("amper"))
+							if (course_obj_list[pos][i].name.Contains("amper"))
 							{
-								DestroyImmediate(course_obj_list[position][i]);
+								DestroyImmediate(course_obj_list[pos][i]);
 								
 								//course_obj_list[position][i] = null;
-								course_obj_list[position].RemoveAt(i);
+								course_obj_list[pos].RemoveAt(i);
 							}
 						}
 					}
@@ -226,8 +239,8 @@ namespace nsLevelManager {
 			{
 				foreach(GameObject course_obj in course_obj_list[i])
 				{
-					ChangeAlpha(course_obj, "highlight_particle", 1 - (course_obj.transform.position.z - camera_pos_z) / 25);
-					MixMaterial(course_obj, "highlight_particle", "collide", 1 - (course_obj.transform.position.z - camera_pos_z) / 15);
+					ChangeAlpha(course_obj, 1 - (course_obj.transform.position.z - camera_pos_z) / 25);
+					MixMaterial(course_obj, "collide", 1 - (course_obj.transform.position.z - camera_pos_z) / 15);
 				
 				}
 
@@ -251,7 +264,7 @@ namespace nsLevelManager {
 
 					course_obj.transform.Translate(new_delta, Space.World);
 					
-					ChangeAlpha(course_obj, "highlight_particle", -.01f, true);
+					ChangeAlpha(course_obj, -.01f, true);
 
 				}
 			}
@@ -331,14 +344,14 @@ namespace nsLevelManager {
 							Vector3 scale = new Vector3(f_sc, f_sc, f_sc);
 						
 							inst_course_obj.transform.localScale -= scale;
-							ChangeAlpha(inst_course_obj, "highlight_particle", 0f);
+							ChangeAlpha(inst_course_obj, 0f);
 						}
 	      		  }
 				}
 			}
 		}
 
-	void MixMaterial(GameObject g_obj, string str_mesh, string str_dest_material, float avg)
+	void MixMaterial(GameObject g_obj, string str_dest_material, float avg)
 		{
 		
 			Color orig_col;
@@ -365,10 +378,12 @@ namespace nsLevelManager {
 			//g_obj.transform.Find(str_model).GetComponent<Renderer>().material = (Material) Resources.Load(str_dest_material, typeof(Material));
 		}
 
-		void ChangeAlpha (GameObject g_obj, string mesh, float alpha, bool by_delta)
+		public void ChangeAlpha (GameObject g_obj, float alpha, bool by_delta)
 		{
 			Color orig_col;
 			Color new_col;
+
+			
 			foreach (Transform child in g_obj.transform)
 			{
 				orig_col = child.transform.GetComponent<Renderer>().material.color;
@@ -379,11 +394,13 @@ namespace nsLevelManager {
 				if (by_delta) new_col.a = orig_col.a + alpha; else new_col.a = alpha;
 
 				child.transform.GetComponent<Renderer>().material.color = new_col;
+
+		
 			}
 		}
-		void ChangeAlpha(GameObject g_obj, string mesh, float alpha)
+		public void ChangeAlpha(GameObject g_obj, float alpha)
 		{
-			ChangeAlpha(g_obj, mesh, alpha, false);
+			ChangeAlpha(g_obj, alpha, false);
 	
 		}
 		
@@ -428,8 +445,8 @@ namespace nsLevelManager {
 					current_length = level1_course_data.Length;
 					//print("This:" + current_length);
 					current_course_data = level1_course_data;
-					current_position = level1_start_position;
-					current_tickrate = level1_tickrate;
+					current_position = lvl1.start_position;
+					current = lvl1;
 					
 					break;
 
@@ -438,9 +455,8 @@ namespace nsLevelManager {
 					current_length = level2_course_data.Length;
 					//print("This:" + current_length);
 					current_course_data = level2_course_data;
-					current_position = level2_start_position;
-					current_tickrate = level2_tickrate;
-			
+					current_position = lvl2.start_position;
+					current = lvl2;
 
 					break;
 
@@ -449,9 +465,8 @@ namespace nsLevelManager {
 					current_length = level3_course_data.Length;
 					//print("This:" + current_length);
 					current_course_data = level3_course_data;
-					current_position = level3_start_position;
-					current_tickrate = level3_tickrate;
-			
+					current_position = lvl3.start_position;
+					current = lvl3;
 
 					break;
 
@@ -513,8 +528,8 @@ namespace nsLevelManager {
 			PickLevel(current_level);
 		}
 
-private int[][,] level3_course_data = new int[][,]
-	{
+		private int[][,] level3_course_data = new int[][,]
+			{
 											new int[,] { { 0 } },
 											
 											new int[,] { { 0 } },
@@ -563,11 +578,59 @@ private int[][,] level3_course_data = new int[][,]
 											new int[,] { { 0 } },
 											
 											new int[,] { { 0 } },
+										   new int[,] { { 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 6, 6, 6, 6, 6, 0 },
+														{ 0, 6, 6, 6, 6, 6, 0 },
+														{ 0, 6, 6, 6, 6, 6, 0 },
+														{ 0, 6, 6, 6, 6, 6, 0 }, 
+														{ 0, 6, 6, 6, 6, 6, 0 },
+														{ 0, 0, 0, 0, 0, 0, 0 } },
+
+
+										   new int[,] { { 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 1, 1, 1, 1, 1, 0 },
+														{ 0, 1, 6, 6, 6, 1, 0 },
+														{ 0, 1, 6, 6, 6, 1, 0 },
+														{ 0, 1, 6, 6, 6, 1, 0 }, 
+														{ 0, 1, 1, 1, 1, 1, 0 },
+														{ 0, 0, 0, 0, 0, 0, 0 } },
+										   new int[,] { { 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 6, 6, 6, 6, 6, 0 },
+														{ 0, 6, 6, 6, 6, 6, 0 },
+														{ 0, 6, 6, 6, 6, 6, 0 },
+														{ 0, 6, 6, 6, 6, 6, 0 }, 
+														{ 0, 6, 6, 6, 6, 6, 0 },
+														{ 0, 0, 0, 0, 0, 0, 0 } },
+
+
+										   new int[,] { { 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 1, 1, 1, 1, 1, 0 },
+														{ 0, 1, 6, 6, 6, 1, 0 },
+														{ 0, 1, 6, 6, 6, 1, 0 },
+														{ 0, 1, 6, 6, 6, 1, 0 }, 
+														{ 0, 1, 1, 1, 1, 1, 0 },
+														{ 0, 0, 0, 0, 0, 0, 0 } },
+										   new int[,] { { 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 6, 6, 6, 6, 6, 0 },
+														{ 0, 6, 6, 6, 6, 6, 0 },
+														{ 0, 6, 6, 6, 6, 6, 0 },
+														{ 0, 6, 6, 6, 6, 6, 0 }, 
+														{ 0, 6, 6, 6, 6, 6, 0 },
+														{ 0, 0, 0, 0, 0, 0, 0 } },
+
+
+										   new int[,] { { 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 1, 1, 1, 1, 1, 0 },
+														{ 0, 1, 6, 6, 6, 1, 0 },
+														{ 0, 1, 6, 6, 6, 1, 0 },
+														{ 0, 1, 6, 6, 6, 1, 0 }, 
+														{ 0, 1, 1, 1, 1, 1, 0 },
+														{ 0, 0, 0, 0, 0, 0, 0 } },
 
 										   new int[,] { { 0, 0, 0, 0, 0, 0, 0 },
 														{ 0, 6, 6, 6, 6, 6, 0 },
 														{ 0, 6, 6, 6, 6, 6, 0 },
-														{ 0, 6, 6, 1, 6, 6, 0 },
+														{ 0, 6, 6, 6, 6, 6, 0 },
 														{ 0, 6, 6, 6, 6, 6, 0 }, 
 														{ 0, 6, 6, 6, 6, 6, 0 },
 														{ 0, 0, 0, 0, 0, 0, 0 } },
@@ -583,7 +646,7 @@ private int[][,] level3_course_data = new int[][,]
 										   new int[,] { { 0, 0, 0, 0, 0, 0, 0 },
 														{ 0, 6, 6, 6, 6, 6, 0 },
 														{ 0, 6, 6, 6, 6, 6, 0 },
-														{ 0, 6, 6, 1, 6, 6, 0 },
+														{ 0, 6, 6, 6, 6, 6, 0 },
 														{ 0, 6, 6, 6, 6, 6, 0 }, 
 														{ 0, 6, 6, 6, 6, 6, 0 },
 														{ 0, 0, 0, 0, 0, 0, 0 } },
@@ -1151,330 +1214,6 @@ private int[][,] level2_course_data = new int[][,]
 			};
 											
 			}
-		}
-// private int[][,] level1_course_data = new int[][,]
-// 											  {
-// 									 new int[,] { { 0, 0, 0, 0, 0, 0 },
-// 											      { 0, 0, 0, 0, 0, 0 },
-// 											      { 0, 0, 0, 0, 0, 0 },
-// 												  { 0, 0, 0, 0, 0, 0 },
-// 												  { 0, 0, 0, 0, 0, 0 }, 
-// 												  { 0, 0, 0, 0, 0, 0 } },
-												
-// 									 new int[,] { { 0, 0, 0, 0, 0, 0 },
-// 											      { 0, 0, 0, 0, 0, 0 },
-// 											      { 0, 0, 0, 0, 0, 0 },
-// 												  { 0, 0, 0, 0, 0, 0 },
-// 												  { 0, 0, 0, 0, 0, 0 }, 
-// 												  { 0, 0, 0, 0, 0, 0 } },
-
-// 									new int[,] { { 0, 0, 0, 0, 0, 0 },
-// 											      { 0, 0, 0, 0, 0, 0 },
-// 											      { 0, 0, 0, 0, 0, 0 },
-// 												  { 0, 0, 0, 0, 0, 0 },
-// 												  { 0, 0, 0, 0, 0, 0 }, 
-// 												  { 0, 0, 0, 0, 0, 0 } },
-
-// 									 new int[,] { { 0, 0, 0, 0, 0, 0 },
-// 											      { 0, 0, 0, 0, 0, 0 },
-// 											      { 0, 0, 0, 0, 0, 0 },
-// 												  { 0, 0, 0, 0, 0, 0 },
-// 												  { 0, 0, 0, 0, 0, 0 }, 
-// 												  { 0, 0, 0, 0, 0, 0 } },
 	
-// 									 new int[,] { { 0, 0, 0, 1, 0, 0, 0 },
-// 											      { 0, 1, 0, 0, 0, 1, 0 },
-// 											      { 0, 0, 0, 0, 0, 0, 0 },
-// 												  { 1, 0, 0, 0, 0, 0, 1 },
-// 												  { 0, 0, 0, 0, 0, 0, 0 }, 
-// 												  { 0, 1, 0, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 0, 1, 0, 0, 0 } },
 
-
-// 									 new int[,] { { 0, 0, 0, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 0, 0, 0 } },
-
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 0, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 0, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-		
-// 			 						 new int[,] { { 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0 },
-// 											      { 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0 },
-// 											      { 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0 },
-// 												  { 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0 },
-// 												  { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 },
-// 												  { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 },
-// 												  { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-// 												  { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-// 												  { 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-// 												  { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 },
-// 												  { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 },
-// 												  { 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0 },
-// 												  { 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0 },
-// 												  { 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0 },
-// 									  			  { 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0 } },
-
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 0, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 0 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-		
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 0 },
-// 												  { 0, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-
-// 									 new int[,] { { 0, 0, 0, 1, 0, 0, 0 },
-// 											      { 0, 1, 0, 0, 0, 1, 0 },
-// 											      { 0, 0, 0, 0, 0, 0, 0 },
-// 												  { 1, 0, 0, 0, 0, 0, 1 },
-// 												  { 0, 0, 0, 0, 0, 0, 0 }, 
-// 												  { 0, 1, 0, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 0, 1, 0, 0, 0 } },
-	
-// 									 new int[,] { { 0, 0, 0, 1, 0, 0, 0 },
-// 											      { 0, 1, 0, 0, 0, 1, 0 },
-// 											      { 0, 0, 0, 0, 0, 0, 0 },
-// 												  { 1, 0, 0, 0, 0, 0, 1 },
-// 												  { 0, 0, 0, 0, 0, 0, 0 }, 
-// 												  { 0, 1, 0, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 0, 1, 0, 0, 0 } },
-
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 0, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 0, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-		
-// 									 new int[,] { { 0, 0, 1, 0, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 0, 1, 0, 0 } }, 
-
-// 									 new int[,] { { 0, 0, 0, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 0, 0, 0 } },
-												
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 0, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 0, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-		
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 0, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 0 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-		
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 0 },
-// 												  { 0, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 0, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 0, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-		
-// 									 new int[,] { { 0, 0, 1, 0, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 0, 1, 0, 0 } }, 
-
-// 									 new int[,] { { 0, 0, 0, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 0, 0, 0 } },
-												
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 0, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 0, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-		
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 0, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 0 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-		
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 0 },
-// 												  { 0, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 0, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 0, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-		
-// 									 new int[,] { { 0, 0, 1, 0, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 0, 1, 0, 0 } }, 
-
-// 									 new int[,] { { 0, 0, 0, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 0, 0, 0 } },
-												
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 0, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 0, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-		
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 0, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 0 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-		
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 0 },
-// 												  { 0, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 0, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 0, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-		
-// 									 new int[,] { { 0, 0, 1, 0, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 0, 1, 0, 0 } }, 
-
-// 									 new int[,] { { 0, 0, 0, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 0, 0, 0 } },
-												
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 0, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 0, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-		
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 0, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 0 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-		
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 0 },
-// 												  { 0, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 0, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 0, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-		
-// 									 new int[,] { { 0, 0, 1, 0, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 0, 1, 0, 0 } }, 
-
-// 									 new int[,] { { 0, 0, 0, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 0, 0, 0 } },
-												
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 0, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 0, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-		
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 0, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 0 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-		
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 0 },
-// 												  { 0, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-
-// 									 new int[,] { { 0, 0, 1, 1, 0, 0 },
-// 											      { 0, 1, 0, 0, 0, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 0, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 1, 1, 0, 0 } },
-		
-// 									 new int[,] { { 0, 0, 1, 0, 0, 0 },
-// 											      { 0, 1, 0, 0, 1, 0 },
-// 											      { 1, 0, 0, 0, 0, 1 },
-// 												  { 1, 0, 0, 0, 0, 1 },
-// 												  { 0, 1, 0, 0, 1, 0 }, 
-// 												  { 0, 0, 0, 1, 0, 0 } } };
-
-	
-	
-// 	} 
+	}

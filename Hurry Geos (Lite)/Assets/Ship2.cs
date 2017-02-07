@@ -10,7 +10,7 @@ public class Ship2 : MonoBehaviour {
 	// Use this for initialization
 	public GameObject g_obj_bogey;
 
-
+	public int collide_side;
 
 	void Start () {
 		
@@ -23,11 +23,21 @@ public class Ship2 : MonoBehaviour {
 	void OnTriggerEnter(Collider other)
 	{
 
-			impact = true;
+		impact = true;
 			
-			bogey = other.name;
+		bogey = other.name;
+
 		g_obj_bogey = other.gameObject;
+
+		Vector3 direction = other.transform.position - transform.position;
+
+		if (Vector3.Dot (transform.forward, direction) > 0) {
+			collide_side = 1;
+		} 
+		if (Vector3.Dot (transform.forward, direction) <= 0) {
 	
+			collide_side = 0;
+		} 
 		
 	}
 }
