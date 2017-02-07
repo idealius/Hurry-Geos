@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{1095E53F-7F02-0617-B751-54D5BB06C4F4}</ProjectGuid>
+    <ProjectGuid>{FA6E56D0-66A7-F611-20C8-2E284EFE35D4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -51,6 +51,7 @@
      <Compile Include="Assets\SceneMain.cs" />
      <Compile Include="Assets\Ship1.cs" />
      <Compile Include="Assets\Ship2.cs" />
+     <Compile Include="Assets\Stroyd.cs" />
      <None Include="Assets\Resources\Materials\TransparentVertexLit with Z.shader" />
  <Reference Include="UnityEngine.Analytics">
  <HintPath>/Volumes/LACIEHFS/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
