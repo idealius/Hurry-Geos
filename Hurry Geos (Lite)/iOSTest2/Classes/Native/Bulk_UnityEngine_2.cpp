@@ -13,6 +13,8 @@
 #include <limits>
 #include <assert.h>
 
+// UnityEngine.SharedBetweenAnimatorsAttribute
+struct SharedBetweenAnimatorsAttribute_t1565472209;
 // UnityEngine.SliderState
 struct SliderState_t1595681032;
 // UnityEngine.SocialPlatforms.GameCenter.GameCenterPlatform
@@ -157,10 +159,13 @@ struct TypeInferenceRuleAttribute_t1390152093;
 #include "class-internals.h"
 #include "codegen/il2cpp-codegen.h"
 #include "mscorlib_System_Array3829468939.h"
+#include "UnityEngine_UnityEngine_SharedBetweenAnimatorsAttr1565472209.h"
+#include "UnityEngine_UnityEngine_SharedBetweenAnimatorsAttr1565472209MethodDeclarations.h"
+#include "mscorlib_System_Void1841601450.h"
+#include "mscorlib_System_Attribute542643598MethodDeclarations.h"
 #include "UnityEngine_UnityEngine_SkeletonBone345082847.h"
 #include "UnityEngine_UnityEngine_SkeletonBone345082847MethodDeclarations.h"
 #include "mscorlib_System_Int322071877448.h"
-#include "mscorlib_System_Void1841601450.h"
 #include "mscorlib_System_String2029220233.h"
 #include "UnityEngine_UnityEngine_Vector32243707580.h"
 #include "UnityEngine_UnityEngine_Quaternion4030073918.h"
@@ -329,7 +334,6 @@ struct TypeInferenceRuleAttribute_t1390152093;
 #include "UnityEngine_UnityEngine_TextureWrapMode3683976566MethodDeclarations.h"
 #include "UnityEngine_UnityEngine_ThreadAndSerializationSafe2122816804.h"
 #include "UnityEngine_UnityEngine_ThreadAndSerializationSafe2122816804MethodDeclarations.h"
-#include "mscorlib_System_Attribute542643598MethodDeclarations.h"
 #include "UnityEngine_UnityEngine_Time31991979.h"
 #include "UnityEngine_UnityEngine_Time31991979MethodDeclarations.h"
 #include "UnityEngine_UnityEngine_TooltipAttribute4278647215.h"
@@ -428,6 +432,14 @@ struct TypeInferenceRuleAttribute_t1390152093;
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
+// System.Void UnityEngine.SharedBetweenAnimatorsAttribute::.ctor()
+extern "C"  void SharedBetweenAnimatorsAttribute__ctor_m1221241062 (SharedBetweenAnimatorsAttribute_t1565472209 * __this, const MethodInfo* method)
+{
+	{
+		Attribute__ctor_m1730479323(__this, /*hidden argument*/NULL);
+		return;
+	}
+}
 // System.Int32 UnityEngine.SkeletonBone::get_transformModified()
 extern "C"  int32_t SkeletonBone_get_transformModified_m1528786646 (SkeletonBone_t345082847 * __this, const MethodInfo* method)
 {
@@ -10504,6 +10516,41 @@ IL_006f:
 	{
 		float L_13 = V_1;
 		return L_13;
+	}
+}
+// UnityEngine.Vector3 UnityEngine.Vector3::ClampMagnitude(UnityEngine.Vector3,System.Single)
+extern "C"  Vector3_t2243707580  Vector3_ClampMagnitude_m2652735362 (Il2CppObject * __this /* static, unused */, Vector3_t2243707580  ___vector0, float ___maxLength1, const MethodInfo* method)
+{
+	Vector3_t2243707580  V_0;
+	memset(&V_0, 0, sizeof(V_0));
+	{
+		float L_0 = Vector3_get_sqrMagnitude_m1814096310((&___vector0), /*hidden argument*/NULL);
+		float L_1 = ___maxLength1;
+		float L_2 = ___maxLength1;
+		if ((!(((float)L_0) > ((float)((float)((float)L_1*(float)L_2))))))
+		{
+			goto IL_0023;
+		}
+	}
+	{
+		Vector3_t2243707580  L_3 = Vector3_get_normalized_m936072361((&___vector0), /*hidden argument*/NULL);
+		float L_4 = ___maxLength1;
+		Vector3_t2243707580  L_5 = Vector3_op_Multiply_m1351554733(NULL /*static, unused*/, L_3, L_4, /*hidden argument*/NULL);
+		V_0 = L_5;
+		goto IL_002a;
+	}
+
+IL_0023:
+	{
+		Vector3_t2243707580  L_6 = ___vector0;
+		V_0 = L_6;
+		goto IL_002a;
+	}
+
+IL_002a:
+	{
+		Vector3_t2243707580  L_7 = V_0;
+		return L_7;
 	}
 }
 // System.Single UnityEngine.Vector3::Magnitude(UnityEngine.Vector3)

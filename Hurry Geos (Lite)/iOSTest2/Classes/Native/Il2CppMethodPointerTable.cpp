@@ -9164,6 +9164,7 @@ extern "C" void Vector3_Normalize_m2140428981 ();
 extern "C" void Vector3_get_normalized_m936072361_AdjustorThunk ();
 extern "C" void Vector3_Dot_m3161182818 ();
 extern "C" void Vector3_Distance_m1859670022 ();
+extern "C" void Vector3_ClampMagnitude_m2652735362 ();
 extern "C" void Vector3_Magnitude_m1349200714 ();
 extern "C" void Vector3_get_magnitude_m860342598_AdjustorThunk ();
 extern "C" void Vector3_SqrMagnitude_m3759098164 ();
@@ -10718,13 +10719,18 @@ extern "C" void VerticalLayoutGroup_CalculateLayoutInputHorizontal_m497637066 ()
 extern "C" void VerticalLayoutGroup_CalculateLayoutInputVertical_m3227111700 ();
 extern "C" void VerticalLayoutGroup_SetLayoutHorizontal_m2935499508 ();
 extern "C" void VerticalLayoutGroup_SetLayoutVertical_m1302409034 ();
+extern "C" void Bogey__ctor_m2329792989 ();
+extern "C" void Bogey_Start_m3628775349 ();
+extern "C" void Bogey_Update_m649821520 ();
 extern "C" void CameraTracker__ctor_m3573332444 ();
 extern "C" void CameraTracker_Start_m40127144 ();
 extern "C" void CameraTracker_Initialize_m423417872 ();
 extern "C" void CameraTracker_LateUpdate_m95463043 ();
+extern "C" void GeoTypes__ctor_m1398671232 ();
 extern "C" void LevelManager__ctor_m2204638816 ();
 extern "C" void LevelManager_Start_m3851340720 ();
 extern "C" void LevelManager_UpdatePosition_m4138772836 ();
+extern "C" void LevelManager_RemoveBogeybyRing_m262813993 ();
 extern "C" void LevelManager_CheckforImpact_m1891061771 ();
 extern "C" void LevelManager_UpdateScore_m3897202069 ();
 extern "C" void LevelManager_UpdatePositionCalc_m1603579497 ();
@@ -10742,18 +10748,11 @@ extern "C" void SceneMain__ctor_m3928308984 ();
 extern "C" void SceneMain_Start_m821503012 ();
 extern "C" void SceneMain_FixedUpdate_m839638201 ();
 extern "C" void SceneMain_GameInput_m2830805350 ();
-extern "C" void Ship1__ctor_m3761278196 ();
-extern "C" void Ship1_Start_m3404047588 ();
-extern "C" void Ship1_Update_m1704156713 ();
-extern "C" void Ship1_OnTriggerEnter_m764515432 ();
-extern "C" void Ship2__ctor_m3757936055 ();
-extern "C" void Ship2_Start_m3400698979 ();
-extern "C" void Ship2_Update_m1593650698 ();
-extern "C" void Ship2_OnTriggerEnter_m1107300299 ();
-extern "C" void Stroyd__ctor_m1706232524 ();
-extern "C" void Stroyd_Start_m650881876 ();
-extern "C" void Stroyd_Update_m3474200373 ();
-extern const Il2CppMethodPointer g_MethodPointers[10742] = 
+extern "C" void Ship__ctor_m4202732153 ();
+extern "C" void Ship_Start_m1273291801 ();
+extern "C" void Ship_Update_m2569956408 ();
+extern "C" void Ship_OnTriggerEnter_m2110498493 ();
+extern const Il2CppMethodPointer g_MethodPointers[10741] = 
 {
 	Locale_GetText_m1954433032,
 	Locale_GetText_m2553164138,
@@ -19908,6 +19907,7 @@ extern const Il2CppMethodPointer g_MethodPointers[10742] =
 	Vector3_get_normalized_m936072361_AdjustorThunk,
 	Vector3_Dot_m3161182818,
 	Vector3_Distance_m1859670022,
+	Vector3_ClampMagnitude_m2652735362,
 	Vector3_Magnitude_m1349200714,
 	Vector3_get_magnitude_m860342598_AdjustorThunk,
 	Vector3_SqrMagnitude_m3759098164,
@@ -21462,13 +21462,18 @@ extern const Il2CppMethodPointer g_MethodPointers[10742] =
 	VerticalLayoutGroup_CalculateLayoutInputVertical_m3227111700,
 	VerticalLayoutGroup_SetLayoutHorizontal_m2935499508,
 	VerticalLayoutGroup_SetLayoutVertical_m1302409034,
+	Bogey__ctor_m2329792989,
+	Bogey_Start_m3628775349,
+	Bogey_Update_m649821520,
 	CameraTracker__ctor_m3573332444,
 	CameraTracker_Start_m40127144,
 	CameraTracker_Initialize_m423417872,
 	CameraTracker_LateUpdate_m95463043,
+	GeoTypes__ctor_m1398671232,
 	LevelManager__ctor_m2204638816,
 	LevelManager_Start_m3851340720,
 	LevelManager_UpdatePosition_m4138772836,
+	LevelManager_RemoveBogeybyRing_m262813993,
 	LevelManager_CheckforImpact_m1891061771,
 	LevelManager_UpdateScore_m3897202069,
 	LevelManager_UpdatePositionCalc_m1603579497,
@@ -21486,15 +21491,8 @@ extern const Il2CppMethodPointer g_MethodPointers[10742] =
 	SceneMain_Start_m821503012,
 	SceneMain_FixedUpdate_m839638201,
 	SceneMain_GameInput_m2830805350,
-	Ship1__ctor_m3761278196,
-	Ship1_Start_m3404047588,
-	Ship1_Update_m1704156713,
-	Ship1_OnTriggerEnter_m764515432,
-	Ship2__ctor_m3757936055,
-	Ship2_Start_m3400698979,
-	Ship2_Update_m1593650698,
-	Ship2_OnTriggerEnter_m1107300299,
-	Stroyd__ctor_m1706232524,
-	Stroyd_Start_m650881876,
-	Stroyd_Update_m3474200373,
+	Ship__ctor_m4202732153,
+	Ship_Start_m1273291801,
+	Ship_Update_m2569956408,
+	Ship_OnTriggerEnter_m2110498493,
 };

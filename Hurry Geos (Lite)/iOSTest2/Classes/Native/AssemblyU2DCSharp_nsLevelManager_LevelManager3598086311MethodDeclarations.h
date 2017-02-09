@@ -20,6 +20,7 @@ struct GameObject_t1756533147;
 struct String_t;
 
 #include "codegen/il2cpp-codegen.h"
+#include "AssemblyU2DCSharp_GeoExtensions_GeoTypes_Bogeys2495612575.h"
 #include "UnityEngine_UnityEngine_GameObject1756533147.h"
 #include "mscorlib_System_String2029220233.h"
 
@@ -29,6 +30,8 @@ extern "C"  void LevelManager__ctor_m2204638816 (LevelManager_t3598086311 * __th
 extern "C"  void LevelManager_Start_m3851340720 (LevelManager_t3598086311 * __this, const MethodInfo* method) IL2CPP_METHOD_ATTR;
 // System.Void nsLevelManager.LevelManager::UpdatePosition()
 extern "C"  void LevelManager_UpdatePosition_m4138772836 (LevelManager_t3598086311 * __this, const MethodInfo* method) IL2CPP_METHOD_ATTR;
+// System.Void nsLevelManager.LevelManager::RemoveBogeybyRing(System.Int32,GeoExtensions.GeoTypes/Bogeys)
+extern "C"  void LevelManager_RemoveBogeybyRing_m262813993 (LevelManager_t3598086311 * __this, int32_t ___ring_position0, int32_t ___bogey_type1, const MethodInfo* method) IL2CPP_METHOD_ATTR;
 // System.Void nsLevelManager.LevelManager::CheckforImpact()
 extern "C"  void LevelManager_CheckforImpact_m1891061771 (LevelManager_t3598086311 * __this, const MethodInfo* method) IL2CPP_METHOD_ATTR;
 // System.Void nsLevelManager.LevelManager::UpdateScore()

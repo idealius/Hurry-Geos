@@ -1477,15 +1477,18 @@ extern const Il2CppGenericInst GenInst_AnimationTriggers_t3244928895_0_0_0 = { 1
 extern const Il2CppType Animator_t69676727_0_0_0;
 static const Il2CppType* GenInst_Animator_t69676727_0_0_0_Types[] = { &Animator_t69676727_0_0_0 };
 extern const Il2CppGenericInst GenInst_Animator_t69676727_0_0_0 = { 1, GenInst_Animator_t69676727_0_0_0_Types };
-extern const Il2CppType Ship1_t1303907657_0_0_0;
-static const Il2CppType* GenInst_Ship1_t1303907657_0_0_0_Types[] = { &Ship1_t1303907657_0_0_0 };
-extern const Il2CppGenericInst GenInst_Ship1_t1303907657_0_0_0 = { 1, GenInst_Ship1_t1303907657_0_0_0_Types };
-extern const Il2CppType Ship2_t1303907656_0_0_0;
-static const Il2CppType* GenInst_Ship2_t1303907656_0_0_0_Types[] = { &Ship2_t1303907656_0_0_0 };
-extern const Il2CppGenericInst GenInst_Ship2_t1303907656_0_0_0 = { 1, GenInst_Ship2_t1303907656_0_0_0_Types };
+extern const Il2CppType Ship_t1116303770_0_0_0;
+static const Il2CppType* GenInst_Ship_t1116303770_0_0_0_Types[] = { &Ship_t1116303770_0_0_0 };
+extern const Il2CppGenericInst GenInst_Ship_t1116303770_0_0_0 = { 1, GenInst_Ship_t1116303770_0_0_0_Types };
+extern const Il2CppType Bogey_t873753070_0_0_0;
+static const Il2CppType* GenInst_Bogey_t873753070_0_0_0_Types[] = { &Bogey_t873753070_0_0_0 };
+extern const Il2CppGenericInst GenInst_Bogey_t873753070_0_0_0 = { 1, GenInst_Bogey_t873753070_0_0_0_Types };
 extern const Il2CppType SphereCollider_t1662511355_0_0_0;
 static const Il2CppType* GenInst_SphereCollider_t1662511355_0_0_0_Types[] = { &SphereCollider_t1662511355_0_0_0 };
 extern const Il2CppGenericInst GenInst_SphereCollider_t1662511355_0_0_0 = { 1, GenInst_SphereCollider_t1662511355_0_0_0_Types };
+extern const Il2CppType BoxCollider_t22920061_0_0_0;
+static const Il2CppType* GenInst_BoxCollider_t22920061_0_0_0_Types[] = { &BoxCollider_t22920061_0_0_0 };
+extern const Il2CppGenericInst GenInst_BoxCollider_t22920061_0_0_0 = { 1, GenInst_BoxCollider_t22920061_0_0_0_Types };
 extern const Il2CppType Renderer_t257310565_0_0_0;
 static const Il2CppType* GenInst_Renderer_t257310565_0_0_0_Types[] = { &Renderer_t257310565_0_0_0 };
 extern const Il2CppGenericInst GenInst_Renderer_t257310565_0_0_0 = { 1, GenInst_Renderer_t257310565_0_0_0_Types };
@@ -1540,7 +1543,7 @@ static const Il2CppType* GenInst_KeyValuePair_2_t38854645_0_0_0_KeyValuePair_2_t
 extern const Il2CppGenericInst GenInst_KeyValuePair_2_t38854645_0_0_0_KeyValuePair_2_t38854645_0_0_0 = { 2, GenInst_KeyValuePair_2_t38854645_0_0_0_KeyValuePair_2_t38854645_0_0_0_Types };
 static const Il2CppType* GenInst_KeyValuePair_2_t38854645_0_0_0_Il2CppObject_0_0_0_Types[] = { &KeyValuePair_2_t38854645_0_0_0, &Il2CppObject_0_0_0 };
 extern const Il2CppGenericInst GenInst_KeyValuePair_2_t38854645_0_0_0_Il2CppObject_0_0_0 = { 2, GenInst_KeyValuePair_2_t38854645_0_0_0_Il2CppObject_0_0_0_Types };
-extern const Il2CppGenericInst* const g_Il2CppGenericInstTable[531] = 
+extern const Il2CppGenericInst* const g_Il2CppGenericInstTable[532] = 
 {
 	&GenInst_Il2CppObject_0_0_0,
 	&GenInst_Int32_t2071877448_0_0_0,
@@ -2045,9 +2048,10 @@ extern const Il2CppGenericInst* const g_Il2CppGenericInstTable[531] =
 	&GenInst_TextAnchor_t112990806_0_0_0,
 	&GenInst_AnimationTriggers_t3244928895_0_0_0,
 	&GenInst_Animator_t69676727_0_0_0,
-	&GenInst_Ship1_t1303907657_0_0_0,
-	&GenInst_Ship2_t1303907656_0_0_0,
+	&GenInst_Ship_t1116303770_0_0_0,
+	&GenInst_Bogey_t873753070_0_0_0,
 	&GenInst_SphereCollider_t1662511355_0_0_0,
+	&GenInst_BoxCollider_t22920061_0_0_0,
 	&GenInst_Renderer_t257310565_0_0_0,
 	&GenInst_CameraTracker_t2463508323_0_0_0,
 	&GenInst_LevelManager_t3598086311_0_0_0,

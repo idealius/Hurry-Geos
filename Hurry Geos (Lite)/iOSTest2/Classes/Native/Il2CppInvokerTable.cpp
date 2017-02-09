@@ -6070,6 +6070,13 @@ void* RuntimeInvoker_Single_t2076509932_Vector3_t2243707580_Vector3_t2243707580 
 	return Box(il2cpp_codegen_class_from_type (method->return_type), &ret);
 }
 
+void* RuntimeInvoker_Vector3_t2243707580_Vector3_t2243707580_Single_t2076509932 (const MethodInfo* method, void* obj, void** args)
+{
+	typedef Vector3_t2243707580  (*Func)(void* obj, Vector3_t2243707580  p1, float p2, const MethodInfo* method);
+	Vector3_t2243707580  ret = ((Func)method->methodPointer)(obj, *((Vector3_t2243707580 *)args[0]), *((float*)args[1]), method);
+	return Box(il2cpp_codegen_class_from_type (method->return_type), &ret);
+}
+
 void* RuntimeInvoker_Single_t2076509932_Vector3_t2243707580 (const MethodInfo* method, void* obj, void** args)
 {
 	typedef float (*Func)(void* obj, Vector3_t2243707580  p1, const MethodInfo* method);
@@ -6081,13 +6088,6 @@ void* RuntimeInvoker_Vector3_t2243707580_Vector3_t2243707580_Vector3_t2243707580
 {
 	typedef Vector3_t2243707580  (*Func)(void* obj, Vector3_t2243707580  p1, Vector3_t2243707580  p2, const MethodInfo* method);
 	Vector3_t2243707580  ret = ((Func)method->methodPointer)(obj, *((Vector3_t2243707580 *)args[0]), *((Vector3_t2243707580 *)args[1]), method);
-	return Box(il2cpp_codegen_class_from_type (method->return_type), &ret);
-}
-
-void* RuntimeInvoker_Vector3_t2243707580_Vector3_t2243707580_Single_t2076509932 (const MethodInfo* method, void* obj, void** args)
-{
-	typedef Vector3_t2243707580  (*Func)(void* obj, Vector3_t2243707580  p1, float p2, const MethodInfo* method);
-	Vector3_t2243707580  ret = ((Func)method->methodPointer)(obj, *((Vector3_t2243707580 *)args[0]), *((float*)args[1]), method);
 	return Box(il2cpp_codegen_class_from_type (method->return_type), &ret);
 }
 
@@ -12642,9 +12642,9 @@ extern const InvokerMethod g_Il2CppInvokerPointers[1638] =
 	RuntimeInvoker_Void_t1841601450_Single_t2076509932_Single_t2076509932,
 	RuntimeInvoker_Vector3_t2243707580_Vector3_t2243707580_Vector3_t2243707580_Single_t2076509932,
 	RuntimeInvoker_Single_t2076509932_Vector3_t2243707580_Vector3_t2243707580,
+	RuntimeInvoker_Vector3_t2243707580_Vector3_t2243707580_Single_t2076509932,
 	RuntimeInvoker_Single_t2076509932_Vector3_t2243707580,
 	RuntimeInvoker_Vector3_t2243707580_Vector3_t2243707580_Vector3_t2243707580,
-	RuntimeInvoker_Vector3_t2243707580_Vector3_t2243707580_Single_t2076509932,
 	RuntimeInvoker_Boolean_t3825574718_Vector3_t2243707580_Vector3_t2243707580,
 	RuntimeInvoker_Void_t1841601450_Single_t2076509932_Single_t2076509932_Single_t2076509932_Single_t2076509932,
 	RuntimeInvoker_Quaternion_t4030073918_Single_t2076509932_Vector3_t2243707580,

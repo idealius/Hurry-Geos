@@ -23,7 +23,7 @@ public class SceneMain : MonoBehaviour {
 		g = gameObject.AddComponent<LevelManager>();
 		//Screen.SetResolution (750, 1334, false);
 	
-		g.PickLevel(2);
+		g.PickLevel(1);
 
 	}
 	

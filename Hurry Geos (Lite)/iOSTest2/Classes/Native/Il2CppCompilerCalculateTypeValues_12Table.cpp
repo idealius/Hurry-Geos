@@ -109,13 +109,13 @@
 #include "UnityEngine_UnityEngine_ContactPoint1376425630.h"
 #include "UnityEngine_UnityEngine_Rigidbody4233889191.h"
 #include "UnityEngine_UnityEngine_Collider3497673348.h"
+#include "UnityEngine_UnityEngine_BoxCollider22920061.h"
 #include "UnityEngine_UnityEngine_SphereCollider1662511355.h"
 #include "UnityEngine_UnityEngine_RaycastHit87180320.h"
 #include "UnityEngine_UnityEngine_CharacterController4094781467.h"
 #include "UnityEngine_UnityEngine_RaycastHit2D4063908774.h"
 #include "UnityEngine_UnityEngine_Physics2D2540166467.h"
 #include "UnityEngine_UnityEngine_Rigidbody2D502193897.h"
-#include "UnityEngine_UnityEngine_Collider2D646061738.h"
 
 
 
@@ -624,9 +624,10 @@ extern const int32_t g_FieldOffsetTable1290[5] =
 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize1291 = { sizeof (Rigidbody_t4233889191), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize1292 = { sizeof (Collider_t3497673348), -1, 0, 0 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize1293 = { sizeof (SphereCollider_t1662511355), -1, 0, 0 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize1294 = { sizeof (RaycastHit_t87180320)+ sizeof (Il2CppObject), -1, 0, 0 };
-extern const int32_t g_FieldOffsetTable1294[6] = 
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize1293 = { sizeof (BoxCollider_t22920061), -1, 0, 0 };
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize1294 = { sizeof (SphereCollider_t1662511355), -1, 0, 0 };
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize1295 = { sizeof (RaycastHit_t87180320)+ sizeof (Il2CppObject), -1, 0, 0 };
+extern const int32_t g_FieldOffsetTable1295[6] = 
 {
 	RaycastHit_t87180320::get_offset_of_m_Point_0() + static_cast<int32_t>(sizeof(Il2CppObject)),
 	RaycastHit_t87180320::get_offset_of_m_Normal_1() + static_cast<int32_t>(sizeof(Il2CppObject)),
@@ -635,9 +636,9 @@ extern const int32_t g_FieldOffsetTable1294[6] =
 	RaycastHit_t87180320::get_offset_of_m_UV_4() + static_cast<int32_t>(sizeof(Il2CppObject)),
 	RaycastHit_t87180320::get_offset_of_m_Collider_5() + static_cast<int32_t>(sizeof(Il2CppObject)),
 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize1295 = { sizeof (CharacterController_t4094781467), -1, 0, 0 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize1296 = { sizeof (RaycastHit2D_t4063908774)+ sizeof (Il2CppObject), -1, 0, 0 };
-extern const int32_t g_FieldOffsetTable1296[6] = 
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize1296 = { sizeof (CharacterController_t4094781467), -1, 0, 0 };
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize1297 = { sizeof (RaycastHit2D_t4063908774)+ sizeof (Il2CppObject), -1, 0, 0 };
+extern const int32_t g_FieldOffsetTable1297[6] = 
 {
 	RaycastHit2D_t4063908774::get_offset_of_m_Centroid_0() + static_cast<int32_t>(sizeof(Il2CppObject)),
 	RaycastHit2D_t4063908774::get_offset_of_m_Point_1() + static_cast<int32_t>(sizeof(Il2CppObject)),
@@ -646,13 +647,12 @@ extern const int32_t g_FieldOffsetTable1296[6] =
 	RaycastHit2D_t4063908774::get_offset_of_m_Fraction_4() + static_cast<int32_t>(sizeof(Il2CppObject)),
 	RaycastHit2D_t4063908774::get_offset_of_m_Collider_5() + static_cast<int32_t>(sizeof(Il2CppObject)),
 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize1297 = { sizeof (Physics2D_t2540166467), -1, sizeof(Physics2D_t2540166467_StaticFields), 0 };
-extern const int32_t g_FieldOffsetTable1297[1] = 
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize1298 = { sizeof (Physics2D_t2540166467), -1, sizeof(Physics2D_t2540166467_StaticFields), 0 };
+extern const int32_t g_FieldOffsetTable1298[1] = 
 {
 	Physics2D_t2540166467_StaticFields::get_offset_of_m_LastDisabledRigidbody2D_0(),
 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize1298 = { sizeof (Rigidbody2D_t502193897), -1, 0, 0 };
-extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize1299 = { sizeof (Collider2D_t646061738), -1, 0, 0 };
+extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize1299 = { sizeof (Rigidbody2D_t502193897), -1, 0, 0 };
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif

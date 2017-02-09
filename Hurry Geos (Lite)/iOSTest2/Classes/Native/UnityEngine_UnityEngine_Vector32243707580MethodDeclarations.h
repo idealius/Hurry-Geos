@@ -45,6 +45,8 @@ extern "C"  Vector3_t2243707580  Vector3_get_normalized_m936072361 (Vector3_t224
 extern "C"  float Vector3_Dot_m3161182818 (Il2CppObject * __this /* static, unused */, Vector3_t2243707580  ___lhs0, Vector3_t2243707580  ___rhs1, const MethodInfo* method) IL2CPP_METHOD_ATTR;
 // System.Single UnityEngine.Vector3::Distance(UnityEngine.Vector3,UnityEngine.Vector3)
 extern "C"  float Vector3_Distance_m1859670022 (Il2CppObject * __this /* static, unused */, Vector3_t2243707580  ___a0, Vector3_t2243707580  ___b1, const MethodInfo* method) IL2CPP_METHOD_ATTR;
+// UnityEngine.Vector3 UnityEngine.Vector3::ClampMagnitude(UnityEngine.Vector3,System.Single)
+extern "C"  Vector3_t2243707580  Vector3_ClampMagnitude_m2652735362 (Il2CppObject * __this /* static, unused */, Vector3_t2243707580  ___vector0, float ___maxLength1, const MethodInfo* method) IL2CPP_METHOD_ATTR;
 // System.Single UnityEngine.Vector3::Magnitude(UnityEngine.Vector3)
 extern "C"  float Vector3_Magnitude_m1349200714 (Il2CppObject * __this /* static, unused */, Vector3_t2243707580  ___a0, const MethodInfo* method) IL2CPP_METHOD_ATTR;
 // System.Single UnityEngine.Vector3::get_magnitude()
