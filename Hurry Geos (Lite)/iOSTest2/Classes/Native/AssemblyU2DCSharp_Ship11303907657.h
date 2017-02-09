@@ -31,8 +31,10 @@ public:
 	bool ___impact_2;
 	// System.String Ship1::bogey
 	String_t* ___bogey_3;
+	// System.Int32 Ship1::collide_side
+	int32_t ___collide_side_4;
 	// UnityEngine.GameObject Ship1::g_obj_bogey
-	GameObject_t1756533147 * ___g_obj_bogey_4;
+	GameObject_t1756533147 * ___g_obj_bogey_5;
 
 public:
 	inline static int32_t get_offset_of_impact_2() { return static_cast<int32_t>(offsetof(Ship1_t1303907657, ___impact_2)); }
@@ -52,13 +54,21 @@ public:
 		Il2CppCodeGenWriteBarrier(&___bogey_3, value);
 	}
 
-	inline static int32_t get_offset_of_g_obj_bogey_4() { return static_cast<int32_t>(offsetof(Ship1_t1303907657, ___g_obj_bogey_4)); }
-	inline GameObject_t1756533147 * get_g_obj_bogey_4() const { return ___g_obj_bogey_4; }
-	inline GameObject_t1756533147 ** get_address_of_g_obj_bogey_4() { return &___g_obj_bogey_4; }
-	inline void set_g_obj_bogey_4(GameObject_t1756533147 * value)
+	inline static int32_t get_offset_of_collide_side_4() { return static_cast<int32_t>(offsetof(Ship1_t1303907657, ___collide_side_4)); }
+	inline int32_t get_collide_side_4() const { return ___collide_side_4; }
+	inline int32_t* get_address_of_collide_side_4() { return &___collide_side_4; }
+	inline void set_collide_side_4(int32_t value)
 	{
-		___g_obj_bogey_4 = value;
-		Il2CppCodeGenWriteBarrier(&___g_obj_bogey_4, value);
+		___collide_side_4 = value;
+	}
+
+	inline static int32_t get_offset_of_g_obj_bogey_5() { return static_cast<int32_t>(offsetof(Ship1_t1303907657, ___g_obj_bogey_5)); }
+	inline GameObject_t1756533147 * get_g_obj_bogey_5() const { return ___g_obj_bogey_5; }
+	inline GameObject_t1756533147 ** get_address_of_g_obj_bogey_5() { return &___g_obj_bogey_5; }
+	inline void set_g_obj_bogey_5(GameObject_t1756533147 * value)
+	{
+		___g_obj_bogey_5 = value;
+		Il2CppCodeGenWriteBarrier(&___g_obj_bogey_5, value);
 	}
 };
 

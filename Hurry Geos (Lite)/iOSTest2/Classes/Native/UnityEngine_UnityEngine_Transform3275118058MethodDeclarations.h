@@ -14,6 +14,8 @@
 
 // UnityEngine.Transform
 struct Transform_t3275118058;
+// System.String
+struct String_t;
 // System.Collections.IEnumerator
 struct IEnumerator_t1466026749;
 
@@ -23,6 +25,7 @@ struct IEnumerator_t1466026749;
 #include "UnityEngine_UnityEngine_Transform3275118058.h"
 #include "UnityEngine_UnityEngine_Matrix4x42933234003.h"
 #include "UnityEngine_UnityEngine_Space4278750806.h"
+#include "mscorlib_System_String2029220233.h"
 
 // UnityEngine.Vector3 UnityEngine.Transform::get_position()
 extern "C"  Vector3_t2243707580  Transform_get_position_m1104419803 (Transform_t3275118058 * __this, const MethodInfo* method) IL2CPP_METHOD_ATTR;
@@ -108,6 +111,8 @@ extern "C"  void Transform_INTERNAL_CALL_InverseTransformPoint_m69330567 (Il2Cpp
 extern "C"  int32_t Transform_get_childCount_m881385315 (Transform_t3275118058 * __this, const MethodInfo* method) IL2CPP_METHOD_ATTR;
 // System.Void UnityEngine.Transform::SetAsFirstSibling()
 extern "C"  void Transform_SetAsFirstSibling_m3606528771 (Transform_t3275118058 * __this, const MethodInfo* method) IL2CPP_METHOD_ATTR;
+// UnityEngine.Transform UnityEngine.Transform::Find(System.String)
+extern "C"  Transform_t3275118058 * Transform_Find_m3323476454 (Transform_t3275118058 * __this, String_t* ___name0, const MethodInfo* method) IL2CPP_METHOD_ATTR;
 // System.Boolean UnityEngine.Transform::IsChildOf(UnityEngine.Transform)
 extern "C"  bool Transform_IsChildOf_m10844547 (Transform_t3275118058 * __this, Transform_t3275118058 * ___parent0, const MethodInfo* method) IL2CPP_METHOD_ATTR;
 // System.Collections.IEnumerator UnityEngine.Transform::GetEnumerator()

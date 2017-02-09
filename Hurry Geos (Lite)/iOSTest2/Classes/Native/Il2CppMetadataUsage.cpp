@@ -1907,6 +1907,8 @@ const MethodInfo* Object_Instantiate_TisGameObject_t1756533147_m3064851704_Metho
 const MethodInfo* Component_GetComponent_TisRenderer_t257310565_m772028041_MethodInfo_var;
 const MethodInfo* GameObject_GetComponent_TisCameraTracker_t2463508323_m3623595408_MethodInfo_var;
 const MethodInfo* GameObject_AddComponent_TisLevelManager_t3598086311_m4122672859_MethodInfo_var;
+const MethodInfo* GameObject_GetComponent_TisTrailRenderer_t2490637367_m2443646283_MethodInfo_var;
+const MethodInfo* Component_GetComponent_TisTrailRenderer_t2490637367_m3426588471_MethodInfo_var;
 const MethodInfo* ObjectPool_1_Get_m1059967947_MethodInfo_var;
 const MethodInfo* List_1_get_Count_m703718621_MethodInfo_var;
 const MethodInfo* ObjectPool_1_Release_m1049318251_MethodInfo_var;
@@ -1999,7 +2001,7 @@ FieldInfo* U3CPrivateImplementationDetailsU3E_t1486305140____U24U24fieldU2D11_11
 FieldInfo* U3CPrivateImplementationDetailsU3E_t1486305141____U24fieldU2D7BBE37982E6C057ED87163CAFC7FD6E5E42EEA46_0_FieldInfo_var;
 FieldInfo* U3CPrivateImplementationDetailsU3E_t1486305142____U24fieldU2D825FFF281796B3876E1601E461FDC37959709696_0_FieldInfo_var;
 FieldInfo* U3CPrivateImplementationDetailsU3E_t1486305142____U24fieldU2D7F5CAB17D7EDCC236081A76F7A58EEA18B8ED8F8_1_FieldInfo_var;
-FieldInfo* U3CPrivateImplementationDetailsU3E_t1486305142____U24fieldU2D275B8FE839FBF340C78BD25E15B08105D9ED2438_2_FieldInfo_var;
+FieldInfo* U3CPrivateImplementationDetailsU3E_t1486305142____U24fieldU2D9DD62DD7C06DEB2EC6630E5A647039F98E51C461_2_FieldInfo_var;
 FieldInfo* U3CPrivateImplementationDetailsU3E_t1486305142____U24fieldU2D501EDAF090314A72C404FDBF6239255145C71E41_3_FieldInfo_var;
 FieldInfo* U3CPrivateImplementationDetailsU3E_t1486305142____U24fieldU2D5B8661E42B6DFABED0A3CBCF113315E575DC72E2_4_FieldInfo_var;
 FieldInfo* U3CPrivateImplementationDetailsU3E_t1486305142____U24fieldU2DC956B7DF7657E4300BADDAB9EF16C20944DAFFD3_5_FieldInfo_var;
@@ -4786,10 +4788,10 @@ Il2CppCodeGenString* _stringLiteral2031986174;
 Il2CppCodeGenString* _stringLiteral2724187655;
 Il2CppCodeGenString* _stringLiteral2247053792;
 Il2CppCodeGenString* _stringLiteral1756683522;
-Il2CppCodeGenString* _stringLiteral1510475295;
 Il2CppCodeGenString* _stringLiteral950014160;
 Il2CppCodeGenString* _stringLiteral1036433785;
 Il2CppCodeGenString* _stringLiteral3675648761;
+Il2CppCodeGenString* _stringLiteral2518678245;
 Il2CppCodeGenString* _stringLiteral4129818676;
 Il2CppCodeGenString* _stringLiteral1998753457;
 Il2CppCodeGenString* _stringLiteral3806059236;
@@ -4822,7 +4824,7 @@ Il2CppCodeGenString* _stringLiteral3025533088;
 Il2CppCodeGenString* _stringLiteral3687436746;
 Il2CppCodeGenString* _stringLiteral2779811765;
 Il2CppCodeGenString* _stringLiteral273729679;
-extern void** const g_MetadataUsages[4811] = 
+extern void** const g_MetadataUsages[4813] = 
 {
 	(void**)&Contraction_t1673853792_0_0_0_var,
 	(void**)&Level2Map_t3322505726_0_0_0_var,
@@ -6720,6 +6722,8 @@ extern void** const g_MetadataUsages[4811] =
 	(void**)&Component_GetComponent_TisRenderer_t257310565_m772028041_MethodInfo_var,
 	(void**)&GameObject_GetComponent_TisCameraTracker_t2463508323_m3623595408_MethodInfo_var,
 	(void**)&GameObject_AddComponent_TisLevelManager_t3598086311_m4122672859_MethodInfo_var,
+	(void**)&GameObject_GetComponent_TisTrailRenderer_t2490637367_m2443646283_MethodInfo_var,
+	(void**)&Component_GetComponent_TisTrailRenderer_t2490637367_m3426588471_MethodInfo_var,
 	(void**)&ObjectPool_1_Get_m1059967947_MethodInfo_var,
 	(void**)&List_1_get_Count_m703718621_MethodInfo_var,
 	(void**)&ObjectPool_1_Release_m1049318251_MethodInfo_var,
@@ -6812,7 +6816,7 @@ extern void** const g_MetadataUsages[4811] =
 	(void**)&U3CPrivateImplementationDetailsU3E_t1486305141____U24fieldU2D7BBE37982E6C057ED87163CAFC7FD6E5E42EEA46_0_FieldInfo_var,
 	(void**)&U3CPrivateImplementationDetailsU3E_t1486305142____U24fieldU2D825FFF281796B3876E1601E461FDC37959709696_0_FieldInfo_var,
 	(void**)&U3CPrivateImplementationDetailsU3E_t1486305142____U24fieldU2D7F5CAB17D7EDCC236081A76F7A58EEA18B8ED8F8_1_FieldInfo_var,
-	(void**)&U3CPrivateImplementationDetailsU3E_t1486305142____U24fieldU2D275B8FE839FBF340C78BD25E15B08105D9ED2438_2_FieldInfo_var,
+	(void**)&U3CPrivateImplementationDetailsU3E_t1486305142____U24fieldU2D9DD62DD7C06DEB2EC6630E5A647039F98E51C461_2_FieldInfo_var,
 	(void**)&U3CPrivateImplementationDetailsU3E_t1486305142____U24fieldU2D501EDAF090314A72C404FDBF6239255145C71E41_3_FieldInfo_var,
 	(void**)&U3CPrivateImplementationDetailsU3E_t1486305142____U24fieldU2D5B8661E42B6DFABED0A3CBCF113315E575DC72E2_4_FieldInfo_var,
 	(void**)&U3CPrivateImplementationDetailsU3E_t1486305142____U24fieldU2DC956B7DF7657E4300BADDAB9EF16C20944DAFFD3_5_FieldInfo_var,
@@ -9599,10 +9603,10 @@ extern void** const g_MetadataUsages[4811] =
 	(void**)&_stringLiteral2724187655,
 	(void**)&_stringLiteral2247053792,
 	(void**)&_stringLiteral1756683522,
-	(void**)&_stringLiteral1510475295,
 	(void**)&_stringLiteral950014160,
 	(void**)&_stringLiteral1036433785,
 	(void**)&_stringLiteral3675648761,
+	(void**)&_stringLiteral2518678245,
 	(void**)&_stringLiteral4129818676,
 	(void**)&_stringLiteral1998753457,
 	(void**)&_stringLiteral3806059236,
@@ -13136,11 +13140,11 @@ extern const uint32_t LeaseManager__ctor_m2166901364_MetadataUsageId = 3496;
 extern const uint32_t Level2MapComparer__cctor_m3753124597_MetadataUsageId = 3497;
 extern const uint32_t Level2MapComparer_Compare_m2537942367_MetadataUsageId = 3498;
 extern const uint32_t LevelManager__ctor_m2204638816_MetadataUsageId = 3499;
-extern const uint32_t LevelManager_ChangeAlpha_m4130291528_MetadataUsageId = 3500;
+extern const uint32_t LevelManager_ChangeAlpha_m1891255292_MetadataUsageId = 3500;
 extern const uint32_t LevelManager_CheckforImpact_m1891061771_MetadataUsageId = 3501;
 extern const uint32_t LevelManager_ClearLevel_m3166062283_MetadataUsageId = 3502;
 extern const uint32_t LevelManager_GenerateCourseObjects_m1377174166_MetadataUsageId = 3503;
-extern const uint32_t LevelManager_MixMaterial_m2112589518_MetadataUsageId = 3504;
+extern const uint32_t LevelManager_MixMaterial_m3891273646_MetadataUsageId = 3504;
 extern const uint32_t LevelManager_PickLevel_m2848591844_MetadataUsageId = 3505;
 extern const uint32_t LevelManager_Start_m3851340720_MetadataUsageId = 3506;
 extern const uint32_t LevelManager_UpdateFramePositionCalc_m1359887444_MetadataUsageId = 3507;

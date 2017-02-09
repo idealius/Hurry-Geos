@@ -31,10 +31,10 @@ struct  SceneMain_t1045915103  : public MonoBehaviour_t1158329972
 public:
 	// nsLevelManager.LevelManager SceneMain::g
 	LevelManager_t3598086311 * ___g_2;
-	// UnityEngine.GameObject SceneMain::g_obj1
-	GameObject_t1756533147 * ___g_obj1_3;
-	// UnityEngine.GameObject SceneMain::g_obj2
-	GameObject_t1756533147 * ___g_obj2_4;
+	// UnityEngine.GameObject SceneMain::shp1
+	GameObject_t1756533147 * ___shp1_3;
+	// UnityEngine.GameObject SceneMain::shp2
+	GameObject_t1756533147 * ___shp2_4;
 	// UnityEngine.GameObject SceneMain::c_obj
 	GameObject_t1756533147 * ___c_obj_5;
 	// CameraTracker SceneMain::c_obj_script
@@ -50,22 +50,22 @@ public:
 		Il2CppCodeGenWriteBarrier(&___g_2, value);
 	}
 
-	inline static int32_t get_offset_of_g_obj1_3() { return static_cast<int32_t>(offsetof(SceneMain_t1045915103, ___g_obj1_3)); }
-	inline GameObject_t1756533147 * get_g_obj1_3() const { return ___g_obj1_3; }
-	inline GameObject_t1756533147 ** get_address_of_g_obj1_3() { return &___g_obj1_3; }
-	inline void set_g_obj1_3(GameObject_t1756533147 * value)
+	inline static int32_t get_offset_of_shp1_3() { return static_cast<int32_t>(offsetof(SceneMain_t1045915103, ___shp1_3)); }
+	inline GameObject_t1756533147 * get_shp1_3() const { return ___shp1_3; }
+	inline GameObject_t1756533147 ** get_address_of_shp1_3() { return &___shp1_3; }
+	inline void set_shp1_3(GameObject_t1756533147 * value)
 	{
-		___g_obj1_3 = value;
-		Il2CppCodeGenWriteBarrier(&___g_obj1_3, value);
+		___shp1_3 = value;
+		Il2CppCodeGenWriteBarrier(&___shp1_3, value);
 	}
 
-	inline static int32_t get_offset_of_g_obj2_4() { return static_cast<int32_t>(offsetof(SceneMain_t1045915103, ___g_obj2_4)); }
-	inline GameObject_t1756533147 * get_g_obj2_4() const { return ___g_obj2_4; }
-	inline GameObject_t1756533147 ** get_address_of_g_obj2_4() { return &___g_obj2_4; }
-	inline void set_g_obj2_4(GameObject_t1756533147 * value)
+	inline static int32_t get_offset_of_shp2_4() { return static_cast<int32_t>(offsetof(SceneMain_t1045915103, ___shp2_4)); }
+	inline GameObject_t1756533147 * get_shp2_4() const { return ___shp2_4; }
+	inline GameObject_t1756533147 ** get_address_of_shp2_4() { return &___shp2_4; }
+	inline void set_shp2_4(GameObject_t1756533147 * value)
 	{
-		___g_obj2_4 = value;
-		Il2CppCodeGenWriteBarrier(&___g_obj2_4, value);
+		___shp2_4 = value;
+		Il2CppCodeGenWriteBarrier(&___shp2_4, value);
 	}
 
 	inline static int32_t get_offset_of_c_obj_5() { return static_cast<int32_t>(offsetof(SceneMain_t1045915103, ___c_obj_5)); }

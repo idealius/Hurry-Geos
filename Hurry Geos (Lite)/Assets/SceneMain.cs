@@ -5,7 +5,6 @@ using nsLevelManager;
 
 public class SceneMain : MonoBehaviour {
 
-
 	public LevelManager g;
 	GameObject shp1;
 	GameObject shp2;
@@ -24,7 +23,7 @@ public class SceneMain : MonoBehaviour {
 		g = gameObject.AddComponent<LevelManager>();
 		//Screen.SetResolution (750, 1334, false);
 	
-		g.PickLevel(3);
+		g.PickLevel(2);
 
 	}
 	
@@ -36,15 +35,19 @@ public class SceneMain : MonoBehaviour {
 		
 	}
 
+	// public float distance_normalized(Vector3 vec1, Vector3 vec2, float threshold)
+	// {
+		
+	// }
+
 	void GameInput ()
 	{
 		
 		float deltax = 0;
 		Vector3 orbit1;
 		Vector3 orbit2;
-		Vector3 gas = new Vector3(0, 0, g.current.tickrate);
+		Vector3 gas;
 		float multiplier = 2.2f;
-		//Vector3 shp1_radius_shrink = new Vector3(g_obj1.transform.position.x, g_obj1.transform.position.y
 		
 		if (shp1 == null || shp2 == null) return;
 
@@ -90,6 +93,8 @@ public class SceneMain : MonoBehaviour {
 				
 			}
 
+		gas = new Vector3(0, 0, g.current.tickrate);
+
 		orbit1 = new Vector3(0, 0, shp1.transform.position.z);
 		orbit2 = new Vector3(0, 0, shp2.transform.position.z);
 
@@ -103,6 +108,7 @@ public class SceneMain : MonoBehaviour {
 		Vector3 r0_c_dest = new Vector3(c_obj_script.r0_player_offset_x, c_obj_script.r0_player_offset_y, shp1.transform.position.z + c_obj_script.r0_player_offset_z);
 		Vector3 r1_c_dest = new Vector3(c_obj_script.r1_player_offset_x, c_obj_script.r1_player_offset_y, shp1.transform.position.z + c_obj_script.r1_player_offset_z);
 
+
 	
 		
 		if (g.radius_shift == 0)
@@ -112,6 +118,12 @@ public class SceneMain : MonoBehaviour {
 			{
 				shp1.transform.position = Vector3.MoveTowards(shp1.transform.position, orbit1, g.current.tickrate / 1.8f);
 				shp2.transform.position = Vector3.MoveTowards(shp2.transform.position, orbit2, g.current.tickrate / 1.8f);
+			}
+			else
+			{
+				Vector3.ClampMagnitude(shp1.transform.position, .7f);
+				Vector3.ClampMagnitude(shp2.transform.position, .7f);
+				
 			}
 			// Move Camera
 			if (Vector3.Distance(c_obj.transform.position, r0_c_dest) > 0)
@@ -131,7 +143,12 @@ public class SceneMain : MonoBehaviour {
 				Vector3 vec1 = new Vector3(shp1.transform.position.x * 1.08f, shp1.transform.position.y * 1.08f, shp1.transform.position.z);
 				Vector3 vec2 = new Vector3(shp2.transform.position.x * 1.08f, shp2.transform.position.y * 1.08f, shp1.transform.position.z);
 				shp1.transform.position = vec1;
-				shp2.transform.position = vec2;
+				shp2.transform.position = vec2; 
+			}
+			else
+			{
+				Vector3.ClampMagnitude(shp1.transform.position, 2.5f);
+				Vector3.ClampMagnitude(shp2.transform.position, 2.5f);
 			}
 			// Move Camera
 			if (Vector3.Distance(c_obj.transform.position, r1_c_dest) > 0)

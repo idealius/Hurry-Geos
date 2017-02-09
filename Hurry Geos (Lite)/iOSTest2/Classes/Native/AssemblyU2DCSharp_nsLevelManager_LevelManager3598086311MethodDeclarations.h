@@ -41,12 +41,12 @@ extern "C"  void LevelManager_UpdateRingPositionCalc_m3840579739 (LevelManager_t
 extern "C"  void LevelManager_UpdateFramePositionCalc_m1359887444 (LevelManager_t3598086311 * __this, const MethodInfo* method) IL2CPP_METHOD_ATTR;
 // System.Void nsLevelManager.LevelManager::GenerateCourseObjects()
 extern "C"  void LevelManager_GenerateCourseObjects_m1377174166 (LevelManager_t3598086311 * __this, const MethodInfo* method) IL2CPP_METHOD_ATTR;
-// System.Void nsLevelManager.LevelManager::MixMaterial(UnityEngine.GameObject,System.String,System.String,System.Single)
-extern "C"  void LevelManager_MixMaterial_m2112589518 (LevelManager_t3598086311 * __this, GameObject_t1756533147 * ___g_obj0, String_t* ___str_mesh1, String_t* ___str_dest_material2, float ___avg3, const MethodInfo* method) IL2CPP_METHOD_ATTR;
-// System.Void nsLevelManager.LevelManager::ChangeAlpha(UnityEngine.GameObject,System.String,System.Single,System.Boolean)
-extern "C"  void LevelManager_ChangeAlpha_m4130291528 (LevelManager_t3598086311 * __this, GameObject_t1756533147 * ___g_obj0, String_t* ___mesh1, float ___alpha2, bool ___by_delta3, const MethodInfo* method) IL2CPP_METHOD_ATTR;
-// System.Void nsLevelManager.LevelManager::ChangeAlpha(UnityEngine.GameObject,System.String,System.Single)
-extern "C"  void LevelManager_ChangeAlpha_m4115085197 (LevelManager_t3598086311 * __this, GameObject_t1756533147 * ___g_obj0, String_t* ___mesh1, float ___alpha2, const MethodInfo* method) IL2CPP_METHOD_ATTR;
+// System.Void nsLevelManager.LevelManager::MixMaterial(UnityEngine.GameObject,System.String,System.Single)
+extern "C"  void LevelManager_MixMaterial_m3891273646 (LevelManager_t3598086311 * __this, GameObject_t1756533147 * ___g_obj0, String_t* ___str_dest_material1, float ___avg2, const MethodInfo* method) IL2CPP_METHOD_ATTR;
+// System.Void nsLevelManager.LevelManager::ChangeAlpha(UnityEngine.GameObject,System.Single,System.Boolean)
+extern "C"  void LevelManager_ChangeAlpha_m1891255292 (LevelManager_t3598086311 * __this, GameObject_t1756533147 * ___g_obj0, float ___alpha1, bool ___by_delta2, const MethodInfo* method) IL2CPP_METHOD_ATTR;
+// System.Void nsLevelManager.LevelManager::ChangeAlpha(UnityEngine.GameObject,System.Single)
+extern "C"  void LevelManager_ChangeAlpha_m2206909911 (LevelManager_t3598086311 * __this, GameObject_t1756533147 * ___g_obj0, float ___alpha1, const MethodInfo* method) IL2CPP_METHOD_ATTR;
 // System.Void nsLevelManager.LevelManager::AdvanceLevel()
 extern "C"  void LevelManager_AdvanceLevel_m4184892014 (LevelManager_t3598086311 * __this, const MethodInfo* method) IL2CPP_METHOD_ATTR;
 // System.Void nsLevelManager.LevelManager::PickLevel(System.Int32)

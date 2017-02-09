@@ -8762,6 +8762,7 @@ extern "C" void UpdatedEventHandler__ctor_m1393569768 ();
 extern "C" void UpdatedEventHandler_Invoke_m159598802 ();
 extern "C" void UpdatedEventHandler_BeginInvoke_m4238510153 ();
 extern "C" void UpdatedEventHandler_EndInvoke_m224684362 ();
+extern "C" void Renderer_set_enabled_m142717579 ();
 extern "C" void Renderer_get_material_m2553789785 ();
 extern "C" void Renderer_get_sortingLayerID_m2403577271 ();
 extern "C" void Renderer_get_sortingOrder_m1544525007 ();
@@ -9112,6 +9113,7 @@ extern "C" void Transform_InverseTransformPoint_m2648491174 ();
 extern "C" void Transform_INTERNAL_CALL_InverseTransformPoint_m69330567 ();
 extern "C" void Transform_get_childCount_m881385315 ();
 extern "C" void Transform_SetAsFirstSibling_m3606528771 ();
+extern "C" void Transform_Find_m3323476454 ();
 extern "C" void Transform_IsChildOf_m10844547 ();
 extern "C" void Transform_GetEnumerator_m3479720613 ();
 extern "C" void Transform_GetChild_m3838588184 ();
@@ -10729,9 +10731,9 @@ extern "C" void LevelManager_UpdatePositionCalc_m1603579497 ();
 extern "C" void LevelManager_UpdateRingPositionCalc_m3840579739 ();
 extern "C" void LevelManager_UpdateFramePositionCalc_m1359887444 ();
 extern "C" void LevelManager_GenerateCourseObjects_m1377174166 ();
-extern "C" void LevelManager_MixMaterial_m2112589518 ();
-extern "C" void LevelManager_ChangeAlpha_m4130291528 ();
-extern "C" void LevelManager_ChangeAlpha_m4115085197 ();
+extern "C" void LevelManager_MixMaterial_m3891273646 ();
+extern "C" void LevelManager_ChangeAlpha_m1891255292 ();
+extern "C" void LevelManager_ChangeAlpha_m2206909911 ();
 extern "C" void LevelManager_AdvanceLevel_m4184892014 ();
 extern "C" void LevelManager_PickLevel_m2848591844 ();
 extern "C" void LevelManager_ClearLevel_m3166062283 ();
@@ -10748,7 +10750,10 @@ extern "C" void Ship2__ctor_m3757936055 ();
 extern "C" void Ship2_Start_m3400698979 ();
 extern "C" void Ship2_Update_m1593650698 ();
 extern "C" void Ship2_OnTriggerEnter_m1107300299 ();
-extern const Il2CppMethodPointer g_MethodPointers[10737] = 
+extern "C" void Stroyd__ctor_m1706232524 ();
+extern "C" void Stroyd_Start_m650881876 ();
+extern "C" void Stroyd_Update_m3474200373 ();
+extern const Il2CppMethodPointer g_MethodPointers[10742] = 
 {
 	Locale_GetText_m1954433032,
 	Locale_GetText_m2553164138,
@@ -19501,6 +19506,7 @@ extern const Il2CppMethodPointer g_MethodPointers[10737] =
 	UpdatedEventHandler_Invoke_m159598802,
 	UpdatedEventHandler_BeginInvoke_m4238510153,
 	UpdatedEventHandler_EndInvoke_m224684362,
+	Renderer_set_enabled_m142717579,
 	Renderer_get_material_m2553789785,
 	Renderer_get_sortingLayerID_m2403577271,
 	Renderer_get_sortingOrder_m1544525007,
@@ -19851,6 +19857,7 @@ extern const Il2CppMethodPointer g_MethodPointers[10737] =
 	Transform_INTERNAL_CALL_InverseTransformPoint_m69330567,
 	Transform_get_childCount_m881385315,
 	Transform_SetAsFirstSibling_m3606528771,
+	Transform_Find_m3323476454,
 	Transform_IsChildOf_m10844547,
 	Transform_GetEnumerator_m3479720613,
 	Transform_GetChild_m3838588184,
@@ -21468,9 +21475,9 @@ extern const Il2CppMethodPointer g_MethodPointers[10737] =
 	LevelManager_UpdateRingPositionCalc_m3840579739,
 	LevelManager_UpdateFramePositionCalc_m1359887444,
 	LevelManager_GenerateCourseObjects_m1377174166,
-	LevelManager_MixMaterial_m2112589518,
-	LevelManager_ChangeAlpha_m4130291528,
-	LevelManager_ChangeAlpha_m4115085197,
+	LevelManager_MixMaterial_m3891273646,
+	LevelManager_ChangeAlpha_m1891255292,
+	LevelManager_ChangeAlpha_m2206909911,
 	LevelManager_AdvanceLevel_m4184892014,
 	LevelManager_PickLevel_m2848591844,
 	LevelManager_ClearLevel_m3166062283,
@@ -21487,4 +21494,7 @@ extern const Il2CppMethodPointer g_MethodPointers[10737] =
 	Ship2_Start_m3400698979,
 	Ship2_Update_m1593650698,
 	Ship2_OnTriggerEnter_m1107300299,
+	Stroyd__ctor_m1706232524,
+	Stroyd_Start_m650881876,
+	Stroyd_Update_m3474200373,
 };

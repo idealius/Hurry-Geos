@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using GeoExtensions;
+
+
+
 
 public struct level
 {
@@ -14,8 +18,10 @@ namespace nsLevelManager {
 	 public class LevelManager : MonoBehaviour{
 	
 		//Tracks player ships distance between each other
-		public float radius_shift = 1;
-		private float radius_signature;
+		public int radius_shift = 1;
+
+		//Tracks x rotation axis
+		public int x_rot_axis = 0;
 
 		public level lvl1, lvl2, lvl3, current;
 
@@ -45,16 +51,16 @@ namespace nsLevelManager {
 		private GameObject shp1;
 		private GameObject shp2;
 
-		private Ship1 shp1_scr;
-		private Ship2 shp2_scr;
+		private Ship shp1_scr;
+		private Ship shp2_scr;
 
 		void Start()
 		{
 				shp1 = GameObject.Find("Ship1");
 				shp2 = GameObject.Find("Ship2");
 
-				shp1_scr = shp1.GetComponent<Ship1>();
-				shp2_scr = shp2.GetComponent<Ship2>();
+				shp1_scr = shp1.GetComponent<Ship>();
+				shp2_scr = shp2.GetComponent<Ship>();
 
 				lvl1.start_position = 0;
 				lvl1.tickrate = .15f;
@@ -70,89 +76,82 @@ namespace nsLevelManager {
 			UpdateFramePositionCalc();
 			
 		}
+
+	
+
+		// Helper function for CheckforImpact
+		public void RemoveBogeybyRing(int ring_position, GeoTypes.Bogeys bogey_type)
+		{
+			Bogey bogey_scr;
+			for (int i = course_obj_list[ring_position].Count - 1; i > -1; i--)
+			{
+				bogey_scr = course_obj_list[ring_position][i].GetComponent<Bogey>();
+				if (bogey_scr.type == bogey_type)
+				{
+					DestroyImmediate(course_obj_list[ring_position][i]);
+					course_obj_list[ring_position].RemoveAt(i);
+				}
+			}
+		}
+		
+		//there's a bog[ey] in the ship classes which tracks the impact object, then a bogey script for each bogey
+		//to track other things like position so we can easily delete it without problems like  knowing the orientation
+		//of ship/bogey when they hit
 		public void CheckforImpact()
 		{
-			int pos = position;
+			Bogey bog_scr;
+			Ship imp_ship_scr;
+			int pos = 0;
 			int active_ship = 0;
+			GeoTypes.Bogeys imp_source = GeoTypes.Bogeys.nothing;
 
 			if (shp1_scr == null || shp2_scr == null) return;
 
-			if (shp1_scr.impact) active_ship = 1; else if (shp2_scr.impact) active_ship = 2;
-		
-			if (active_ship != 0)
+			//Distinguish which ship hit, and information about the impact
+			if (shp1_scr.impact)
 			{
+				imp_source = shp1_scr.impact_type;
+				pos = shp1_scr.impact_ring;
+			}	
+			else if (shp2_scr.impact)
+			{
+				imp_source = shp2_scr.impact_type;
+				pos = shp2_scr.impact_ring;
+			}
 				
-				if (shp1_scr.bogey.Contains("amper") || shp2_scr.bogey.Contains("amper"))
-				{
-					
+			switch (imp_source)
+			{
+				case GeoTypes.Bogeys.nothing:
+					break;
+				case GeoTypes.Bogeys.xrot:
+					if (x_rot_axis == 0) x_rot_axis = 1; else x_rot_axis = 1;
+					RemoveBogeybyRing(pos, imp_source);
+					break;
+				case GeoTypes.Bogeys.amper:
 					if (radius_shift == 1) radius_shift = 0; else radius_shift = 1;
-
-					if (active_ship == 1)
-						{
-							if (shp1_scr.collide_side == 0) pos--;
-						}
-					else
-						{
-							if (shp2_scr.collide_side == 0) pos--;
-						}
-
+					RemoveBogeybyRing(pos, imp_source);
 					
-					if (shp1_scr.g_obj_bogey != null)
-					{
-					
-						for (int i = course_obj_list[pos].Count - 1; i > -1; i--)
-						{
-					
-							if (course_obj_list[pos][i].name.Contains("amper"))
-							{
-								DestroyImmediate(course_obj_list[pos][i]);
-								
-								//course_obj_list[position][i] = null;
-								course_obj_list[pos].RemoveAt(i);
-							}
-						}
-					}
-					else if (shp2_scr.g_obj_bogey != null)
-					{
-						for (int i = course_obj_list[pos].Count - 1; i > -1; i--)
-						{
-							if (course_obj_list[pos][i].name.Contains("amper"))
-							{
-								DestroyImmediate(course_obj_list[pos][i]);
-								
-								//course_obj_list[position][i] = null;
-								course_obj_list[pos].RemoveAt(i);
-							}
-						}
-					}
-				}
-				else 
-				{
+					break;
 
-					//AdvanceLevel level if at the end
+				default:
+
 					if (position+1 == current_length)
-					{
-						AdvanceLevel();
-						
-					}
-					else
-					{
-						// print(position);
-						// print(current_length);
-						ResetLevel();
-					}
-
-				}
-				//Since were checking for collision here instead of ship scripts we need to track and reset variables for the next
-				//collision.
-				shp1_scr.impact = false;
-				shp2_scr.impact = false;
-				shp1_scr.bogey = "";
-				shp2_scr.bogey = "";
-
-				
+						{
+							AdvanceLevel();
+							
+						}
+						else
+						{
+							
+							ResetLevel();
+						}
+				break;
 			}
 	
+				shp1_scr.impact = false;
+				shp2_scr.impact = false;
+
+		
 		}
 
 		public void UpdateScore()
@@ -200,7 +199,7 @@ namespace nsLevelManager {
 					Destroy(course_obj);
 				}
 
-				//AdvanceLevel level if at the end (more of a safeguard)
+				//AdvanceLevel if at the end (more of a safeguard)
 				if (position - 2 == current_length)
 				{
 					AdvanceLevel();
@@ -208,14 +207,22 @@ namespace nsLevelManager {
 				}
 			}
 
-			//Add collider for each closely upcoming course_obj
+			//Add collider for each closely upcoming course_obj, spheres for stroyds to make it easier for the player to avoid,
+			//boxes for modifiers like amp/x_rot to make them easier to hit
 			int limit_pos2 = limit_pos+1;
 			if (limit_pos2 >= current_length) limit_pos2 = current_length-1;
 			foreach(GameObject course_obj in course_obj_list[limit_pos2])
 			{
-				
-				course_obj.AddComponent<SphereCollider>();
-				course_obj.GetComponent<SphereCollider>().radius = .5f;// * course_obj.transform.localScale.x;
+				if (course_obj.name.Contains("stroyd"))
+				{
+					course_obj.AddComponent<SphereCollider>();
+					course_obj.GetComponent<SphereCollider>().radius = .5f;// * course_obj.transform.localScale.x;
+				}
+				else
+				{
+					course_obj.AddComponent<BoxCollider>();
+				}
+			
 			}
 
 		}
@@ -224,11 +231,11 @@ namespace nsLevelManager {
 		{
 			position = Mathf.CeilToInt(current_position / depth_separation_mod);
 		
-			float camera_pos_z = -11.5f;
+			float camera_pos_z = 0;
 			int max = position + 6; //6 is based on camera view distance (aligned with Z axis)
 			int limit_pos = position;
 
-			if (shp1 != null) camera_pos_z =  shp1.transform.position.z - 11.5f;
+			if (shp1 != null) camera_pos_z =  shp1.transform.position.z - 6f;
 
 			if (position > current_length) limit_pos = current_length;
 			if (position < 0) limit_pos = 0;	
@@ -240,7 +247,7 @@ namespace nsLevelManager {
 				foreach(GameObject course_obj in course_obj_list[i])
 				{
 					ChangeAlpha(course_obj, 1 - (course_obj.transform.position.z - camera_pos_z) / 25);
-					MixMaterial(course_obj, "collide", 1 - (course_obj.transform.position.z - camera_pos_z) / 15);
+					MixMaterial(course_obj, "collide", 1 - (course_obj.transform.position.z - camera_pos_z + 5.5f) / 15);
 				
 				}
 
@@ -314,7 +321,7 @@ namespace nsLevelManager {
 
 							Vector3 r_position = new Vector3(fit_x, fit_y, z * depth_separation_mod);
 
-							
+
 							switch (a)
 							{
 							case 1:
@@ -322,29 +329,44 @@ namespace nsLevelManager {
 								r_orientation = Quaternion.Euler( Random.Range(0, 360) , Random.Range(0, 360) , Random.Range(0, 360));
 								
 								inst_course_obj = (GameObject) Instantiate(GameObject.Find("stroyd_1"), r_position, r_orientation);
-								inst_course_obj.transform.localScale = Vector3.one;
 								break;
 
 							case 6:
-
+								
 								r_orientation = Quaternion.identity;
 
 								inst_course_obj = (GameObject) Instantiate(GameObject.Find("amper"), r_position, r_orientation);
-								inst_course_obj.transform.localScale = Vector3.one;
+								break;
+
+							case 7:
+								
+								r_orientation = Quaternion.identity;
+
+								inst_course_obj = (GameObject) Instantiate(GameObject.Find("xrot"), r_position, r_orientation);
 								break;
 							default:
 								inst_course_obj = null;
 								break;
 							}
 
-							if (inst_course_obj != null) course_obj_list[z].Add (inst_course_obj);
 
-							//Scale the unit size so it can fit each into a 6x6 field
-							float f_sc = 1f-(1f/(w/6f)); 
-							Vector3 scale = new Vector3(f_sc, f_sc, f_sc);
-						
-							inst_course_obj.transform.localScale -= scale;
-							ChangeAlpha(inst_course_obj, 0f);
+
+							if (inst_course_obj != null)
+							{
+								course_obj_list[z].Add (inst_course_obj);
+
+								inst_course_obj.transform.localScale = Vector3.one;
+
+								Bogey mod_scr = inst_course_obj.GetComponent<Bogey>();
+								mod_scr.pos = z;
+
+								//Scale the unit size so it can fit each into a 6x6 field
+								float f_sc = 1f-(1f/(w/6f)); 
+								Vector3 scale = new Vector3(f_sc, f_sc, f_sc);
+							
+								inst_course_obj.transform.localScale -= scale;
+								ChangeAlpha(inst_course_obj, 0f);
+								}
 						}
 	      		  }
 				}
@@ -386,13 +408,16 @@ namespace nsLevelManager {
 			
 			foreach (Transform child in g_obj.transform)
 			{
+				if (!child.transform.GetComponent<Renderer>().material.HasProperty("_Color")) continue;
+
 				orig_col = child.transform.GetComponent<Renderer>().material.color;
 
 				new_col.r = orig_col.r;
 				new_col.g = orig_col.g;
 				new_col.b = orig_col.b;
 				if (by_delta) new_col.a = orig_col.a + alpha; else new_col.a = alpha;
-
+				
+		
 				child.transform.GetComponent<Renderer>().material.color = new_col;
 
 		
@@ -509,7 +534,6 @@ namespace nsLevelManager {
 
 
 			radius_shift = 1;
-			radius_signature = -1;
 
 			c_obj = GameObject.Find("Camera");
 			c_obj.GetComponent<CameraTracker>().Initialize();
@@ -536,14 +560,14 @@ namespace nsLevelManager {
 											
 											new int[,] { { 0 } },
 											
-											new int[,] { { 0 } },
+											new int[,] { { 7 } },
 
 										   new int[,] { { 0, 0, 0, 0, 0, 0, 0 },
-														{ 0, 6, 6, 6, 6, 6, 0 },
-														{ 0, 6, 6, 0, 6, 6, 0 },
-														{ 0, 6, 0, 0, 0, 6, 0 },
-														{ 0, 6, 6, 0, 6, 6, 0 }, 
-														{ 0, 6, 6, 6, 6, 6, 0 },
+														{ 0, 7, 7, 7, 6, 6, 0 },
+														{ 0, 7, 7, 0, 6, 6, 0 },
+														{ 0, 7, 0, 0, 0, 6, 0 },
+														{ 0, 7, 7, 0, 6, 6, 0 }, 
+														{ 0, 7, 7, 6, 6, 6, 0 },
 														{ 0, 0, 0, 0, 0, 0, 0 } },
 
 
@@ -690,26 +714,9 @@ private int[][,] level2_course_data = new int[][,]
 											new int[,] { { 0 } },
 											
 											new int[,] { { 0 } },
-						
-										   new int[,] { { 0, 0, 1, 1, 0, 0 },
-														{ 0, 6, 0, 0, 1, 0 },
-														{ 1, 0, 0, 0, 0, 1 },
-														{ 1, 0, 0, 0, 0, 1 },
-														{ 0, 1, 0, 0, 6, 0 }, 
-														{ 0, 0, 1, 1, 0, 0 } },
 
-										   new int[,] { { 1, 1, 1, 1, 1, 1, 1 },
-														{ 1, 1, 1, 1, 1, 1, 1 },
-														{ 1, 1, 0, 0, 0, 1, 1 },
-														{ 1, 1, 0, 0, 0, 1, 1 },
-														{ 1, 1, 0, 0, 0, 1, 1 }, 
-														{ 1, 1, 1, 1, 1, 1, 1 },
-														{ 1, 1, 1, 1, 1, 1, 1 } },
 
-									new int[,] { { 0 } },
-									new int[,] { { 0 } },
-									new int[,] { { 0 } },
-									new int[,] { { 0 } },
+											new int[,] {{ 6 }},
 
 										   new int[,] { { 0, 0, 0, 0, 0, 0, 0 },
 														{ 0, 1, 1, 1, 1, 1, 0 },
@@ -750,12 +757,12 @@ private int[][,] level2_course_data = new int[][,]
 											new int[,] { { 0 } },
 											new int[,] { { 0 } },
 
-										   new int[,] { { 0, 1, 0, 0, 1, 0 },
-														{ 0, 1, 0, 0, 1, 0 },
-														{ 0, 1, 0, 0, 1, 0 },
-														{ 0, 1, 0, 0, 1, 0 },
-														{ 0, 1, 0, 0, 1, 0 }, 
-														{ 0, 1, 0, 0, 1, 0 } },
+										   new int[,] { { 1, 1, 0, 0, 1, 1 },
+														{ 1, 1, 0, 0, 1, 1 },
+														{ 1, 1, 0, 0, 1, 1 },
+														{ 1, 1, 0, 0, 1, 1 },
+														{ 1, 1, 0, 0, 1, 1 }, 
+														{ 1, 1, 0, 0, 1, 1 } },
 
 											new int[,] { { 0 } },
 
@@ -816,9 +823,9 @@ private int[][,] level2_course_data = new int[][,]
 
 										   new int[,] { { 0, 0, 0, 0, 0, 0, 0 },
 														{ 0, 0, 0, 0, 0, 0, 0 },
-														{ 0, 0, 6, 0, 1, 0, 0 },
-														{ 0, 0, 0, 0, 0, 0, 0 },
-														{ 0, 0, 1, 0, 6, 0, 0 }, 
+														{ 0, 0, 6, 6, 1, 0, 0 },
+														{ 0, 0, 6, 0, 6, 0, 0 },
+														{ 0, 0, 1, 6, 6, 0, 0 }, 
 														{ 0, 0, 0, 0, 0, 0, 0 },
 														{ 0, 0, 0, 0, 0, 0, 0 } },
 
@@ -829,131 +836,156 @@ private int[][,] level2_course_data = new int[][,]
 										    new int[,] { { 0 } },
 
 											
-											new int[,] { { 0, 0, 1, 1, 0, 0 },
+
+										   new int[,] { { 0, 0, 1, 1, 0, 0 },
 														{ 0, 1, 0, 0, 6, 0 },
-														{ 1, 0, 0, 0, 0, 1 },
-														{ 1, 0, 0, 0, 0, 1 },
+														{ 1, 0, 0, 0, 6, 6 },
+														{ 6, 6, 0, 0, 0, 1 },
 														{ 0, 6, 0, 0, 1, 0 }, 
 														{ 0, 0, 1, 1, 0, 0 } },
-											
-											new int[,] { { 0, 0, 0, 1, 1, 0 },
-														{ 0, 0, 0, 0, 1, 1 },
-														{ 0, 0, 0, 0, 0, 1 },
-														{ 1, 0, 0, 0, 0, 0 },
-														{ 1, 1, 0, 0, 0, 0 }, 
-														{ 0, 1, 1, 0, 0, 0 } },
 
-											new int[,] { { 0, 1, 1, 0, 0, 0 },
-														{ 1, 1, 0, 0, 0, 0 },
-														{ 1, 0, 0, 0, 0, 0 },
-														{ 0, 0, 0, 0, 0, 1 },
-														{ 0, 0, 0, 0, 1, 1 }, 
-														{ 0, 0, 0, 1, 1, 0 } },
-											
-											new int[,] { { 0, 0, 0, 1, 1, 0 },
-														{ 0, 0, 0, 0, 1, 1 },
-														{ 0, 0, 0, 0, 0, 1 },
-														{ 1, 0, 0, 0, 0, 0 },
-														{ 1, 1, 0, 0, 0, 0 }, 
-														{ 0, 1, 1, 0, 0, 0 } },
+											   new int[,] { { 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 6, 6, 1, 0, 0 },
+														{ 0, 0, 6, 0, 6, 0, 0 },
+														{ 0, 0, 1, 6, 6, 0, 0 }, 
+														{ 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 0, 0, 0, 0, 0 } },
 
-											new int[,] { { 0, 1, 1, 0, 0, 0 },
-														{ 1, 1, 0, 0, 0, 0 },
-														{ 1, 0, 0, 0, 0, 0 },
-														{ 0, 0, 0, 0, 0, 1 },
-														{ 0, 0, 0, 0, 1, 1 }, 
-														{ 0, 0, 0, 1, 1, 0 } },
-											
-											new int[,] { { 0, 0, 0, 1, 1, 0 },
-														{ 0, 0, 0, 0, 1, 1 },
-														{ 0, 0, 0, 0, 0, 1 },
-														{ 1, 0, 0, 0, 0, 0 },
-														{ 1, 1, 0, 0, 0, 0 }, 
-														{ 0, 1, 1, 0, 0, 0 } },
-											
+											new int[,] { { 0 } },
+										    new int[,] { { 0 } },
 
-											new int[,] { { 0, 1, 1, 0, 0, 0 },
-														{ 1, 1, 0, 0, 0, 0 },
-														{ 1, 0, 0, 0, 0, 0 },
-														{ 0, 0, 0, 0, 0, 1 },
-														{ 0, 0, 0, 0, 1, 1 }, 
-														{ 0, 0, 0, 1, 1, 0 } },
-											
-											new int[,] { { 0, 0, 0, 1, 1, 0 },
-														{ 0, 0, 0, 0, 1, 1 },
-														{ 0, 0, 6, 6, 0, 1 },
-														{ 1, 0, 6, 6, 0, 0 },
-														{ 1, 1, 0, 0, 0, 0 }, 
-														{ 0, 1, 1, 0, 0, 0 } },
+										   new int[,] { { 0, 0, 1, 1, 0, 0 },
+														{ 0, 1, 0, 0, 6, 0 },
+														{ 1, 0, 0, 0, 6, 6 },
+														{ 6, 6, 0, 0, 0, 1 },
+														{ 0, 6, 0, 0, 1, 0 }, 
+														{ 0, 0, 1, 1, 0, 0 } },
 
-											
+											   new int[,] { { 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 6, 6, 1, 0, 0 },
+														{ 0, 0, 6, 0, 6, 0, 0 },
+														{ 0, 0, 1, 6, 6, 0, 0 }, 
+														{ 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 0, 0, 0, 0, 0 } },
+
+
+											new int[,] { { 0 } },
+										    new int[,] { { 0 } },
+
+										   new int[,] { { 0, 0, 1, 1, 0, 0 },
+														{ 0, 1, 0, 0, 6, 0 },
+														{ 1, 0, 0, 0, 6, 6 },
+														{ 6, 6, 0, 0, 0, 1 },
+														{ 0, 6, 0, 0, 1, 0 }, 
+														{ 0, 0, 1, 1, 0, 0 } },
+
+											   new int[,] { { 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 6, 6, 1, 0, 0 },
+														{ 0, 0, 6, 0, 6, 0, 0 },
+														{ 0, 0, 1, 6, 6, 0, 0 }, 
+														{ 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 0, 0, 0, 0, 0 } },
+
+											new int[,] { { 0 } },
+										    new int[,] { { 0 } },														
+
+										   new int[,] { { 0, 0, 1, 1, 0, 0 },
+														{ 0, 1, 0, 0, 6, 0 },
+														{ 1, 0, 0, 0, 6, 6 },
+														{ 6, 6, 0, 0, 0, 1 },
+														{ 0, 6, 0, 0, 1, 0 }, 
+														{ 0, 0, 1, 1, 0, 0 } },
+
+											   new int[,] { { 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 6, 6, 1, 0, 0 },
+														{ 0, 0, 6, 0, 6, 0, 0 },
+														{ 0, 0, 1, 6, 6, 0, 0 }, 
+														{ 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 0, 0, 0, 0, 0 } },
+														
+
 											new int[,] { { 0 } },
 											new int[,] { { 0 } },
 											new int[,] { { 0 } },
-	 										new int[,] { { 0 } },
-	 										
-											 		
-											new int[,] { { 0, 1, 1, 0, 0, 0 },
-														{ 1, 1, 0, 0, 0, 0 },
-														{ 1, 0, 0, 0, 0, 0 },
-														{ 0, 0, 0, 0, 0, 1 },
-														{ 0, 0, 0, 0, 1, 1 }, 
-														{ 0, 0, 0, 1, 1, 0 } },
-											
-											new int[,] { { 0, 0, 0, 1, 1, 0 },
-														{ 0, 0, 0, 0, 1, 1 },
-														{ 0, 0, 0, 0, 0, 1 },
-														{ 1, 0, 0, 0, 0, 0 },
-														{ 1, 1, 0, 0, 0, 0 }, 
-														{ 0, 1, 1, 0, 0, 0 } },
+											new int[,] { { 0 } },
 
-											new int[,] { { 0, 1, 1, 0, 0, 0 },
-														{ 1, 1, 0, 0, 0, 0 },
-														{ 1, 0, 0, 0, 0, 0 },
-														{ 0, 0, 0, 0, 0, 1 },
-														{ 0, 0, 0, 0, 1, 1 }, 
-														{ 0, 0, 0, 1, 1, 0 } },
-											
-											new int[,] { { 0, 0, 0, 1, 1, 0 },
-														{ 0, 0, 0, 0, 1, 1 },
-														{ 0, 0, 0, 0, 0, 1 },
-														{ 1, 0, 0, 0, 0, 0 },
-														{ 1, 1, 0, 0, 0, 0 }, 
-														{ 0, 1, 1, 0, 0, 0 } },
+										   new int[,] { { 0, 0, 1, 1, 0, 0 },
+														{ 0, 6, 0, 0, 1, 0 },
+														{ 6, 6, 0, 0, 0, 1 },
+														{ 1, 0, 0, 0, 6, 6 },
+														{ 0, 1, 0, 0, 6, 0 }, 
+														{ 0, 0, 1, 1, 0, 0 } },											
 
-											new int[,] { { 0, 1, 1, 0, 0, 0 },
-														{ 1, 1, 0, 0, 0, 0 },
-														{ 1, 0, 0, 0, 0, 0 },
-														{ 0, 0, 0, 0, 0, 1 },
-														{ 0, 0, 0, 0, 1, 1 }, 
-														{ 0, 0, 0, 1, 1, 0 } },
+											new int[,] { { 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 1, 6, 6, 0, 0 },
+														{ 0, 0, 6, 0, 6, 0, 0 },
+														{ 0, 0, 6, 6, 1, 0, 0 }, 
+														{ 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 0, 0, 0, 0, 0 } },
+														
+
 											
-											new int[,] { { 0, 0, 0, 1, 1, 0 },
-														{ 0, 0, 0, 0, 1, 1 },
-														{ 0, 0, 0, 0, 0, 1 },
-														{ 1, 0, 0, 0, 0, 0 },
-														{ 1, 1, 0, 0, 0, 0 }, 
-														{ 0, 1, 1, 0, 0, 0 } },
+											   new int[,] { { 0, 0, 1, 1, 0, 0 },
+														{ 0, 6, 0, 0, 1, 0 },
+														{ 6, 6, 0, 0, 0, 1 },
+														{ 1, 0, 0, 0, 6, 6 },
+														{ 0, 1, 0, 0, 6, 0 }, 
+														{ 0, 0, 1, 1, 0, 0 } },											
+
+											new int[,] { { 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 1, 6, 6, 0, 0 },
+														{ 0, 0, 6, 0, 6, 0, 0 },
+														{ 0, 0, 6, 6, 1, 0, 0 }, 
+														{ 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 0, 0, 0, 0, 0 } },
 											
 
-											new int[,] { { 0, 1, 1, 0, 0, 0 },
-														{ 1, 1, 0, 0, 0, 0 },
-														{ 1, 0, 0, 0, 0, 0 },
-														{ 0, 0, 0, 0, 0, 1 },
-														{ 0, 0, 0, 0, 1, 1 }, 
-														{ 0, 0, 0, 1, 1, 0 } },
+													   new int[,] { { 0, 0, 1, 1, 0, 0 },
+														{ 0, 6, 0, 0, 1, 0 },
+														{ 6, 6, 0, 0, 0, 1 },
+														{ 1, 0, 0, 0, 6, 6 },
+														{ 0, 1, 0, 0, 6, 0 }, 
+														{ 0, 0, 1, 1, 0, 0 } },											
+
+											new int[,] { { 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 1, 6, 6, 0, 0 },
+														{ 0, 0, 6, 0, 6, 0, 0 },
+														{ 0, 0, 6, 6, 1, 0, 0 }, 
+														{ 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 0, 0, 0, 0, 0 } },
+														
+
 											
-											new int[,] { { 0, 0, 0, 1, 1, 0 },
-														{ 0, 0, 0, 0, 1, 1 },
-														{ 0, 0, 0, 0, 0, 1 },
-														{ 1, 0, 0, 0, 0, 0 },
-														{ 1, 1, 0, 0, 0, 0 }, 
-														{ 0, 1, 1, 0, 0, 0 } },
-											 
-											new int[,] { { 0 } },
-											new int[,] { { 0 } },
-											new int[,] { { 0 } },
-	 										new int[,] { { 0 } },
+											   new int[,] { { 0, 0, 1, 1, 0, 0 },
+														{ 0, 6, 0, 0, 1, 0 },
+														{ 6, 6, 0, 0, 0, 1 },
+														{ 1, 0, 0, 0, 6, 6 },
+														{ 0, 1, 0, 0, 6, 0 }, 
+														{ 0, 0, 1, 1, 0, 0 } },											
+
+											new int[,] { { 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 1, 6, 6, 0, 0 },
+														{ 0, 0, 6, 0, 6, 0, 0 },
+														{ 0, 0, 6, 6, 1, 0, 0 }, 
+														{ 0, 0, 0, 0, 0, 0, 0 },
+														{ 0, 0, 0, 0, 0, 0, 0 } },
+
+											
+
+						
+
+									new int[,] { { 0 } },
+									new int[,] { { 0 } },
+									new int[,] { { 0 } },
+									new int[,] { { 0 } },
 
 											 new int[,] { { 1 } }};
 															

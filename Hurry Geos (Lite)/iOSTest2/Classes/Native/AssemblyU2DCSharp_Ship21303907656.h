@@ -33,6 +33,8 @@ public:
 	String_t* ___bogey_3;
 	// UnityEngine.GameObject Ship2::g_obj_bogey
 	GameObject_t1756533147 * ___g_obj_bogey_4;
+	// System.Int32 Ship2::collide_side
+	int32_t ___collide_side_5;
 
 public:
 	inline static int32_t get_offset_of_impact_2() { return static_cast<int32_t>(offsetof(Ship2_t1303907656, ___impact_2)); }
@@ -59,6 +61,14 @@ public:
 	{
 		___g_obj_bogey_4 = value;
 		Il2CppCodeGenWriteBarrier(&___g_obj_bogey_4, value);
+	}
+
+	inline static int32_t get_offset_of_collide_side_5() { return static_cast<int32_t>(offsetof(Ship2_t1303907656, ___collide_side_5)); }
+	inline int32_t get_collide_side_5() const { return ___collide_side_5; }
+	inline int32_t* get_address_of_collide_side_5() { return &___collide_side_5; }
+	inline void set_collide_side_5(int32_t value)
+	{
+		___collide_side_5 = value;
 	}
 };
 

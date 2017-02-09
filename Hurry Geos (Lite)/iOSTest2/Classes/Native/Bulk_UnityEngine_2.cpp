@@ -350,6 +350,8 @@ struct TypeInferenceRuleAttribute_t1390152093;
 #include "UnityEngine_UnityEngine_TouchType2732027771MethodDeclarations.h"
 #include "UnityEngine_UnityEngine_TrackedReference1045890189.h"
 #include "UnityEngine_UnityEngine_TrackedReference1045890189MethodDeclarations.h"
+#include "UnityEngine_UnityEngine_TrailRenderer2490637367.h"
+#include "UnityEngine_UnityEngine_TrailRenderer2490637367MethodDeclarations.h"
 #include "UnityEngine_UnityEngine_Transform3275118058.h"
 #include "UnityEngine_UnityEngine_Transform3275118058MethodDeclarations.h"
 #include "UnityEngine_UnityEngine_Vector32243707580MethodDeclarations.h"
@@ -9053,6 +9055,15 @@ extern "C"  void Transform_SetAsFirstSibling_m3606528771 (Transform_t3275118058 
 	if (!_il2cpp_icall_func)
 	_il2cpp_icall_func = (Transform_SetAsFirstSibling_m3606528771_ftn)il2cpp_codegen_resolve_icall ("UnityEngine.Transform::SetAsFirstSibling()");
 	_il2cpp_icall_func(__this);
+}
+// UnityEngine.Transform UnityEngine.Transform::Find(System.String)
+extern "C"  Transform_t3275118058 * Transform_Find_m3323476454 (Transform_t3275118058 * __this, String_t* ___name0, const MethodInfo* method)
+{
+	typedef Transform_t3275118058 * (*Transform_Find_m3323476454_ftn) (Transform_t3275118058 *, String_t*);
+	static Transform_Find_m3323476454_ftn _il2cpp_icall_func;
+	if (!_il2cpp_icall_func)
+	_il2cpp_icall_func = (Transform_Find_m3323476454_ftn)il2cpp_codegen_resolve_icall ("UnityEngine.Transform::Find(System.String)");
+	return _il2cpp_icall_func(__this, ___name0);
 }
 // System.Boolean UnityEngine.Transform::IsChildOf(UnityEngine.Transform)
 extern "C"  bool Transform_IsChildOf_m10844547 (Transform_t3275118058 * __this, Transform_t3275118058 * ___parent0, const MethodInfo* method)

@@ -1782,6 +1782,10 @@ void RegisterAllStrippedInternalCalls()
 		void Register_UnityEngine_Renderer_get_sortingOrder();
 		Register_UnityEngine_Renderer_get_sortingOrder();
 
+		//System.Void UnityEngine.Renderer::set_enabled(System.Boolean)
+		void Register_UnityEngine_Renderer_set_enabled();
+		Register_UnityEngine_Renderer_set_enabled();
+
 		//UnityEngine.Material UnityEngine.Renderer::get_material()
 		void Register_UnityEngine_Renderer_get_material();
 		Register_UnityEngine_Renderer_get_material();
@@ -2237,6 +2241,10 @@ void RegisterAllStrippedInternalCalls()
 		//System.Void UnityEngine.Transform::set_parentInternal(UnityEngine.Transform)
 		void Register_UnityEngine_Transform_set_parentInternal();
 		Register_UnityEngine_Transform_set_parentInternal();
+
+		//UnityEngine.Transform UnityEngine.Transform::Find(System.String)
+		void Register_UnityEngine_Transform_Find();
+		Register_UnityEngine_Transform_Find();
 
 		//UnityEngine.Transform UnityEngine.Transform::GetChild(System.Int32)
 		void Register_UnityEngine_Transform_GetChild();
