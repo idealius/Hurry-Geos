@@ -1,1 +1,1 @@
-![Output sample](https://github.com/idealius/Hurry-Geos/demo.webp)
+![Output sample](https://github.com/idealius/Hurry-Geos/raw/master/demo.webp)
