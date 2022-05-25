@@ -1,0 +1,1 @@
+![Output sample](https://github.com/idealius/Hurry-Geos/demo.webp)
