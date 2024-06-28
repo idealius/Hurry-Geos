@@ -1,0 +1,5 @@
+*.C linguist-detectable=false
+*.C++ linguist-detectable=false
+*.ObjectiveC linguist-detectable=false
+*.ObjectiveC++ linguist-detectable=false
+*.ASP.NET linguist-detectable=false
