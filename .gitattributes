@@ -1,3 +1,5 @@
+*.csharp linguist-language=csharp
+*.csharp linguist-detectable=true
 *.C linguist-detectable=false
 *.C++ linguist-detectable=false
 *.ObjectiveC linguist-detectable=false
